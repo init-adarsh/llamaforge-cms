@@ -1,0 +1,175 @@
+---
+import type { ACFRichTextBlock } from '../../lib/blocks';
+
+interface Props {
+  block: ACFRichTextBlock;
+}
+const { block } = Astro.props;
+---
+
+{block.content && (
+  <section class="acf-richtext-block">
+    <div class="container richtext-container">
+      <div class="richtext-body" set:html={block.content} />
+    </div>
+  </section>
+)}
+
+<style>
+  .acf-richtext-block {
+    padding: var(--section-padding);
+    background-color: var(--bg-cream);
+    border-bottom: 1px solid var(--border-color);
+  }
+
+  .richtext-container {
+    max-width: 800px;
+  }
+
+  .richtext-body {
+    line-height: 1.85;
+    color: var(--text-dark);
+    font-size: 1.1rem;
+  }
+
+  .richtext-body :global(h2) {
+    font-size: clamp(1.6rem, 3vw, 2.25rem);
+    color: var(--primary-dark);
+    margin-top: 2.5rem;
+    margin-bottom: 1.25rem;
+    letter-spacing: -0.5px;
+    line-height: 1.2;
+  }
+
+  .richtext-body :global(h3) {
+    font-size: 1.4rem;
+    color: var(--primary-dark);
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+  }
+
+  .richtext-body :global(h4) {
+    font-size: 1.15rem;
+    color: var(--primary-dark);
+    margin-top: 1.5rem;
+    margin-bottom: 0.75rem;
+    font-weight: 800;
+  }
+
+  .richtext-body :global(p) {
+    margin-bottom: 1.75rem;
+    color: var(--text-muted);
+  }
+
+  .richtext-body :global(ul),
+  .richtext-body :global(ol) {
+    margin-bottom: 1.75rem;
+    padding-left: 1.75rem;
+    color: var(--text-muted);
+  }
+
+  .richtext-body :global(li) {
+    margin-bottom: 0.5rem;
+    line-height: 1.7;
+  }
+
+  .richtext-body :global(a) {
+    color: var(--accent-green);
+    font-weight: 700;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .richtext-body :global(a:hover) {
+    color: var(--primary-dark);
+  }
+
+  .richtext-body :global(blockquote) {
+    margin: 2.5rem 0;
+    padding: 1.5rem 2rem;
+    background-color: var(--bg-sand);
+    border-left: 4px solid var(--accent-green);
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 1.25rem;
+    border-radius: 0 16px 16px 0;
+    color: var(--primary-dark);
+  }
+
+  .richtext-body :global(blockquote p) {
+    margin-bottom: 0;
+    color: var(--primary-dark);
+  }
+
+  .richtext-body :global(strong) {
+    font-weight: 800;
+    color: var(--primary-dark);
+  }
+
+  .richtext-body :global(table) {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 2rem;
+    font-size: 0.95rem;
+  }
+
+  .richtext-body :global(th) {
+    background-color: var(--primary-dark);
+    color: var(--text-light);
+    padding: 0.75rem 1rem;
+    text-align: left;
+    font-weight: 700;
+  }
+
+  .richtext-body :global(td) {
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid var(--border-color);
+    color: var(--text-muted);
+  }
+
+  .richtext-body :global(tr:last-child td) {
+    border-bottom: none;
+  }
+
+  .richtext-body :global(tr:nth-child(even) td) {
+    background-color: var(--bg-sand);
+  }
+
+  .richtext-body :global(img) {
+    max-width: 100%;
+    border-radius: 12px;
+    margin: 1.5rem 0;
+  }
+
+  .richtext-body :global(hr) {
+    border: none;
+    height: 1px;
+    background-color: var(--border-color);
+    margin: 2.5rem 0;
+  }
+
+  .richtext-body :global(code) {
+    font-family: 'Courier New', monospace;
+    background-color: var(--bg-sand);
+    padding: 0.15rem 0.45rem;
+    border-radius: 4px;
+    font-size: 0.9em;
+    color: var(--primary-dark);
+  }
+
+  .richtext-body :global(pre) {
+    background-color: var(--primary-dark);
+    color: var(--accent-mint);
+    padding: 1.5rem;
+    border-radius: 12px;
+    overflow-x: auto;
+    font-size: 0.9rem;
+    margin-bottom: 2rem;
+  }
+
+  .richtext-body :global(pre code) {
+    background: none;
+    padding: 0;
+    color: inherit;
+  }
+</style>

@@ -1,0 +1,494 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import { fetchPageBySlug, fetchPages, type WPPage } from '../../lib/wordpress';
+
+const { slug } = Astro.params;
+
+// Always fetch live from WordPress on every request (SSR)
+const page = await fetchPageBySlug(slug!);
+
+if (!page) {
+  return Astro.redirect('/404');
+}
+
+// Verify this page belongs to the 'deployments' parent
+const allPages = await fetchPages();
+const deploymentsParent = allPages.find((p) => p.slug === 'deployments');
+const deploymentsParentId = deploymentsParent ? deploymentsParent.id : -1;
+const pageParentId = page.parent;
+
+if (pageParentId !== deploymentsParentId) {
+  return Astro.redirect('/404');
+}
+
+// Extract environment name from title
+const environmentName = page.title.rendered.replace(/Deployment\s+in\s+/i, '').replace(/Deployment\s+on\s+/i, '');
+---
+
+<Layout title={`${page.title.rendered} - LlamaForge Deployment`} description={page.excerpt.rendered.replace(/<[^>]*>/g, '')}>
+  <Header />
+
+  <main class="country-detail-view">
+    <div class="country-hero-section">
+      <div class="container hero-layout">
+        <div class="hero-text-block">
+          <a href="/" class="back-link">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M19 12H5M5 12l6-6M5 12l6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Back to Deployments
+          </a>
+          <span class="country-badge-tag">Deployment Target</span>
+          <h1 class="country-main-title" set:html={page.title.rendered} />
+          <p class="country-subtitle-intro">
+            Secure, high-throughput model execution optimized for {environmentName}.
+          </p>
+        </div>
+        
+        <div class="country-stat-badge">
+          <span class="badge-num">0ms</span>
+          <span class="badge-lbl">Cold Start Latency</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="container country-layout-grid">
+      <!-- Left Column: Content Body -->
+      <article class="country-main-content">
+        <div class="content-body" set:html={page.content.rendered} />
+
+        <!-- Regional audit details -->
+        <section class="country-region-details">
+          <h3 class="section-subtitle">Why Choose LlamaForge for {environmentName}?</h3>
+          <p class="section-description">LlamaForge offers optimized execution pathways designed to maximize tokens-per-second and minimize latency.</p>
+          
+          <div class="features-columns">
+            <div class="feature-col">
+              <div class="feat-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </div>
+              <h4>Rapid Spin-up</h4>
+              <p>With our optimized serverless runtime, we spin up API endpoints in seconds with zero manual configuration on {environmentName}.</p>
+            </div>
+            
+            <div class="feature-col">
+              <div class="feat-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </div>
+              <h4>Cost-Effective GPU Scaling</h4>
+              <p>Pay only for the exact milliseconds your model executes, or scale to dedicated nodes for flat monthly rates.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- Compliance note -->
+        <div class="regional-legal-note">
+          <h5>Compliance & Security</h5>
+          <p>
+            All deployments feature end-to-end TLS encryption, secure VPC support, and private key token authorization for maximum enterprise security.
+          </p>
+        </div>
+      </article>
+
+      <!-- Right Column: Regional Sidebar -->
+      <aside class="country-sidebar">
+        <!-- Local Office Details -->
+        <div class="sidebar-card office-card">
+          <h4>Environment Specifications</h4>
+          <p class="card-desc">Hardware and protocol details for {environmentName}.</p>
+          
+          <ul class="contact-details-list">
+            <li>
+              <span class="contact-label">Hardware Accelerators</span>
+              <span class="contact-val">NVIDIA H100 / A100 / A10G GPUs</span>
+            </li>
+            <li>
+              <span class="contact-label">Support SLA</span>
+              <a href="mailto:support@llamaforge.ai" class="contact-val">support@llamaforge.ai</a>
+            </li>
+            <li>
+              <span class="contact-label">API Protocol</span>
+              <span class="contact-val address-text">
+                OpenAI-Compatible REST API / WebSockets
+              </span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Local accreditor info -->
+        <div class="sidebar-card regional-accreditation-card">
+          <h4>Framework Integrations</h4>
+          <p class="card-desc">Supported libraries and registries for {environmentName} integrations:</p>
+          
+          <ul class="regional-seals">
+            <li>
+              <strong>Ollama Compatible</strong>
+              <span>Easily run custom weights locally using the Ollama CLI.</span>
+            </li>
+            <li>
+              <strong>vLLM Serving Engine</strong>
+              <span>Powered by vLLM for high-throughput paged-attention inference.</span>
+            </li>
+            <li>
+              <strong>Docker & Kubernetes</strong>
+              <span>Packaged container configurations for standard deployments.</span>
+            </li>
+          </ul>
+
+          <div class="divider"></div>
+
+          <a href="/#pricing" class="btn btn-secondary sidebar-cta">Deploy Now</a>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <Footer />
+</Layout>
+
+<style>
+  .country-detail-view {
+    padding-top: 70px;
+    background-color: var(--bg-cream);
+    min-height: calc(100vh - 70px);
+  }
+
+  .country-hero-section {
+    background-color: var(--bg-sand);
+    border-bottom: 1px solid var(--border-color);
+    padding: 6rem 0 4rem;
+  }
+
+  .hero-layout {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 3rem;
+  }
+
+  .hero-text-block {
+    flex: 1;
+  }
+
+  .country-hero-section .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    margin-bottom: 2rem;
+  }
+
+  .country-hero-section .back-link:hover {
+    color: var(--accent-green);
+  }
+
+  .country-badge-tag {
+    font-size: 0.75rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    color: var(--accent-green);
+    letter-spacing: 2px;
+    margin-bottom: 0.75rem;
+    display: inline-block;
+  }
+
+  .country-main-title {
+    font-size: clamp(2.25rem, 5vw, 3.5rem);
+    line-height: 1.15;
+    letter-spacing: -1.5px;
+    color: var(--primary-dark);
+    margin-bottom: 1.5rem;
+  }
+
+  .country-subtitle-intro {
+    font-size: clamp(1.1rem, 2vw, 1.25rem);
+    color: var(--text-muted);
+    max-width: 700px;
+    line-height: 1.5;
+  }
+
+  .country-stat-badge {
+    background-color: var(--primary-dark);
+    color: var(--text-light);
+    padding: 2rem;
+    border-radius: 24px;
+    text-align: center;
+    min-width: 220px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .badge-num {
+    font-family: var(--font-serif);
+    font-size: 3.5rem;
+    font-weight: 900;
+    line-height: 1;
+    color: var(--accent-green);
+  }
+
+  .badge-lbl {
+    font-size: 0.75rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: rgba(252, 251, 250, 0.7);
+  }
+
+  .country-layout-grid {
+    display: grid;
+    grid-template-columns: 1.25fr 0.75fr;
+    gap: 5rem;
+    padding-top: 4rem;
+    padding-bottom: 6rem;
+    align-items: flex-start;
+  }
+
+  /* Content styles */
+  .country-main-content {
+    display: flex;
+    flex-direction: column;
+    gap: 3.5rem;
+  }
+
+  .content-body {
+    line-height: 1.8;
+    color: var(--text-dark);
+    font-size: 1.05rem;
+  }
+
+  .content-body :global(p) {
+    margin-bottom: 1.5rem;
+  }
+
+  .content-body :global(h2) {
+    font-size: 1.6rem;
+    color: var(--primary-dark);
+    margin-top: 2.25rem;
+    margin-bottom: 1rem;
+  }
+
+  .content-body :global(ul), .content-body :global(ol) {
+    margin-bottom: 1.5rem;
+    padding-left: 2rem;
+  }
+
+  .content-body :global(li) {
+    margin-bottom: 0.4rem;
+  }
+
+  .content-body :global(a) {
+    color: var(--accent-green);
+    text-decoration: underline;
+    font-weight: 700;
+  }
+
+  /* Region specs */
+  .country-region-details {
+    border-top: 1px solid var(--border-color);
+    padding-top: 3rem;
+  }
+
+  .section-subtitle {
+    font-size: 1.75rem;
+    color: var(--primary-dark);
+    margin-bottom: 0.5rem;
+  }
+
+  .section-description {
+    color: var(--text-muted);
+    font-size: 1rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .features-columns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2.5rem;
+  }
+
+  .feature-col {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .feat-icon {
+    width: 48px;
+    height: 48px;
+    background-color: var(--accent-mint);
+    color: var(--accent-green);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .feature-col h4 {
+    font-family: var(--font-sans);
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: var(--primary-dark);
+  }
+
+  .feature-col p {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+
+  /* Legal Notice */
+  .regional-legal-note {
+    background-color: var(--bg-sand);
+    border-left: 4px solid var(--primary-dark);
+    padding: 1.5rem 2rem;
+    border-radius: 0 16px 16px 0;
+  }
+
+  .regional-legal-note h5 {
+    font-family: var(--font-sans);
+    font-size: 0.95rem;
+    font-weight: 800;
+    color: var(--primary-dark);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 0.5rem;
+  }
+
+  .regional-legal-note p {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+
+  /* Sidebar styling */
+  .country-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+    position: sticky;
+    top: 100px;
+  }
+
+  .sidebar-card {
+    background-color: var(--bg-sand);
+    border-radius: 24px;
+    padding: 2.5rem 2rem;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 10px 20px rgba(15, 62, 43, 0.02);
+  }
+
+  .sidebar-card h4 {
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+    color: var(--primary-dark);
+  }
+
+  .card-desc {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    margin-bottom: 1.5rem;
+    line-height: 1.5;
+  }
+
+  .contact-details-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .contact-details-list li {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .contact-label {
+    font-size: 0.75rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    letter-spacing: 0.5px;
+  }
+
+  .contact-val {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--primary-dark);
+    word-break: break-all;
+  }
+
+  a.contact-val:hover {
+    color: var(--accent-green);
+  }
+
+  .address-text {
+    font-weight: 500;
+    line-height: 1.5;
+  }
+
+  .regional-accreditation-card {
+    background-color: var(--bg-cream);
+    border: 1px solid var(--border-color);
+  }
+
+  .regional-seals {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .regional-seals li {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .regional-seals li strong {
+    font-size: 1rem;
+    font-weight: 800;
+    color: var(--primary-dark);
+  }
+
+  .regional-seals li span {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    line-height: 1.4;
+  }
+
+  .divider {
+    height: 1px;
+    background-color: var(--border-color);
+    margin: 1.5rem 0;
+  }
+
+  .sidebar-cta {
+    width: 100%;
+  }
+
+  @media (max-width: 992px) {
+    .hero-layout {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 2rem;
+    }
+    .country-stat-badge {
+      min-width: 100%;
+    }
+    .country-layout-grid {
+      grid-template-columns: 1fr;
+      gap: 3.5rem;
+    }
+    .country-sidebar {
+      position: static;
+    }
+    .features-columns {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+  }
+</style>

@@ -1,0 +1,175 @@
+---
+---
+<section class="social-proof-section">
+  <div class="container social-proof-container">
+    <div class="badges-grid fade-in-up">
+      <!-- Badge 1: Hugging Face -->
+      <div class="proof-badge">
+        <div class="wreath-container">
+          <svg class="wreath-svg" viewBox="0 0 100 100" width="80" height="80">
+            <path d="M30 25 C15 40, 15 60, 30 75" stroke="#0f3e2b" stroke-width="2" fill="none" stroke-dasharray="3 3"/>
+            <path d="M70 25 C85 40, 85 60, 70 75" stroke="#0f3e2b" stroke-width="2" fill="none" stroke-dasharray="3 3"/>
+          </svg>
+          <div class="badge-text-inner">
+            <span class="badge-year">INTEGRATED</span>
+            <span class="badge-org font-serif">HF Hub</span>
+          </div>
+        </div>
+        <p class="badge-desc">Hugging Face Models</p>
+      </div>
+
+      <!-- Badge 2: SLA Uptime -->
+      <div class="proof-badge">
+        <div class="trustpilot-rating">
+          <div class="stars-row">
+            <!-- 5 Green Stars -->
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="#00aa6c"><path d="M12 17.27L18.18 21L16.54 13.97L22 9.24L14.81 8.62L12 2L9.19 8.62L2 9.24L7.45 13.97L5.82 21L12 17.27Z"/></svg>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="#00aa6c"><path d="M12 17.27L18.18 21L16.54 13.97L22 9.24L14.81 8.62L12 2L9.19 8.62L2 9.24L7.45 13.97L5.82 21L12 17.27Z"/></svg>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="#00aa6c"><path d="M12 17.27L18.18 21L16.54 13.97L22 9.24L14.81 8.62L12 2L9.19 8.62L2 9.24L7.45 13.97L5.82 21L12 17.27Z"/></svg>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="#00aa6c"><path d="M12 17.27L18.18 21L16.54 13.97L22 9.24L14.81 8.62L12 2L9.19 8.62L2 9.24L7.45 13.97L5.82 21L12 17.27Z"/></svg>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="#00aa6c"><path d="M12 17.27L18.18 21L16.54 13.97L22 9.24L14.81 8.62L12 2L9.19 8.62L2 9.24L7.45 13.97L5.82 21L12 17.27Z"/></svg>
+          </div>
+          <span class="trustpilot-logo font-serif">99.9% Uptime</span>
+        </div>
+        <p class="badge-desc">Production SLA</p>
+      </div>
+
+      <!-- Badge 3: NVIDIA -->
+      <div class="proof-badge">
+        <div class="wreath-container">
+          <svg class="wreath-svg" viewBox="0 0 100 100" width="80" height="80">
+            <path d="M30 25 C15 40, 15 60, 30 75" stroke="#0f3e2b" stroke-width="2" fill="none" stroke-dasharray="3 3"/>
+            <path d="M70 25 C85 40, 85 60, 70 75" stroke="#0f3e2b" stroke-width="2" fill="none" stroke-dasharray="3 3"/>
+          </svg>
+          <div class="badge-text-inner">
+            <span class="badge-year">POWERED BY</span>
+            <span class="badge-org font-serif">NVIDIA H100</span>
+          </div>
+        </div>
+        <p class="badge-desc">Enterprise GPUs</p>
+      </div>
+    </div>
+
+    <p class="proof-statement fade-in-up" style="animation-delay: 0.1s;">
+      Powering model optimization and production inference for developers, backed by <strong>state-of-the-art GPU infrastructure</strong>.
+    </p>
+  </div>
+</section>
+
+<style>
+  .social-proof-section {
+    padding: 3rem 1.5rem;
+    background-color: var(--bg-cream);
+    border-bottom: 1px solid var(--border-color);
+  }
+
+  .social-proof-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2.5rem;
+  }
+
+  .badges-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 4rem;
+    width: 100%;
+    max-width: 800px;
+  }
+
+  .proof-badge {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 0.75rem;
+  }
+
+  .wreath-container {
+    position: relative;
+    width: 80px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .wreath-svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    animation: rotateSlow 20s linear infinite;
+  }
+
+  @keyframes rotateSlow {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  .badge-text-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    line-height: 1.1;
+  }
+
+  .badge-year {
+    font-size: 0.65rem;
+    font-weight: 800;
+    color: var(--text-muted);
+    letter-spacing: 1px;
+  }
+
+  .badge-org {
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: var(--primary-dark);
+  }
+
+  .trustpilot-rating {
+    height: 80px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+  }
+
+  .stars-row {
+    display: flex;
+    gap: 2px;
+  }
+
+  .trustpilot-logo {
+    font-size: 1.2rem;
+    font-weight: 800;
+    color: var(--primary-dark);
+  }
+
+  .badge-desc {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--text-dark);
+  }
+
+  .proof-statement {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    text-align: center;
+  }
+
+  .proof-statement strong {
+    color: var(--primary-dark);
+  }
+
+  @media (max-width: 768px) {
+    .badges-grid {
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
+    }
+  }
+</style>

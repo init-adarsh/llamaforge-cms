@@ -1,0 +1,360 @@
+---
+---
+<section class="pricing-section" id="pricing">
+  <div class="container pricing-container">
+    <div class="pricing-header fade-in-up">
+      <span class="section-badge">Simple Pricing</span>
+      <h2 class="pricing-title">Simple, transparent plans.</h2>
+      <p class="pricing-subtitle">
+        Serverless GPU training and inference with no hidden fees. Select the compute program that fits your engineering goals.
+      </p>
+
+      <!-- Toggle Button -->
+      <div class="toggle-container">
+        <span class="toggle-label active" id="label-annual">Developer Plan</span>
+        <button class="pricing-toggle-btn" id="pricing-toggle" aria-label="Toggle pricing plan">
+          <span class="toggle-slider"></span>
+        </button>
+        <span class="toggle-label" id="label-monthly">Enterprise Plan</span>
+      </div>
+    </div>
+
+    <!-- Pricing Cards Grid -->
+    <div class="pricing-grid fade-in-up" style="animation-delay: 0.15s;">
+      <!-- Card 1: Developer Plan -->
+      <div class="pricing-card card-annual active-plan" id="card-annual-element">
+        <div class="card-badge">Most Popular</div>
+        <h3 class="plan-name">Developer Plan</h3>
+        <p class="plan-subtitle">Perfect for training and testing small to medium models.</p>
+        
+        <div class="price-container">
+          <div class="price-main">
+            <span class="price-currency">$</span>
+            <span class="price-amount">99</span>
+            <span class="price-period">/month</span>
+          </div>
+          <p class="price-breakdown">Includes $50 compute credits</p>
+        </div>
+
+        <ul class="plan-features">
+          <li>
+            <svg class="check-icon" width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="#00aa6c" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span>Fine-tune models up to 13B parameters</span>
+          </li>
+          <li>
+            <svg class="check-icon" width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="#00aa6c" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span>Shared NVIDIA A100 GPU compute pools</span>
+          </li>
+          <li>
+            <svg class="check-icon" width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="#00aa6c" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span>Up to 5 concurrent training runs</span>
+          </li>
+          <li>
+            <svg class="check-icon" width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="#00aa6c" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span>Hugging Face model import/export</span>
+          </li>
+        </ul>
+
+        <a href="#register" class="btn btn-primary btn-pricing">Start Fine-Tuning</a>
+      </div>
+
+      <!-- Card 2: Enterprise Plan -->
+      <div class="pricing-card card-monthly" id="card-monthly-element">
+        <h3 class="plan-name">Enterprise Plan</h3>
+        <p class="plan-subtitle">For large scale fine-tuning and high-throughput dedicated serving.</p>
+        
+        <div class="price-container">
+          <div class="price-main">
+            <span class="price-currency">$</span>
+            <span class="price-amount">1,250</span>
+            <span class="price-period">/month</span>
+          </div>
+          <p class="price-breakdown">Includes dedicated GPU replicas</p>
+        </div>
+
+        <ul class="plan-features">
+          <li>
+            <svg class="check-icon" width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="#0f3e2b" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span>Fine-tune models up to 70B+ parameters</span>
+          </li>
+          <li>
+            <svg class="check-icon" width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="#0f3e2b" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span>Dedicated H100 & A100 GPU compute pools</span>
+          </li>
+          <li>
+            <svg class="check-icon" width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="#0f3e2b" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span>Unlimited training runs and custom dataset pipelines</span>
+          </li>
+          <li>
+            <svg class="check-icon" width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="#0f3e2b" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span>Private VPC deployment & dedicated support</span>
+          </li>
+        </ul>
+
+        <a href="#register" class="btn btn-secondary btn-pricing">Contact Sales</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .pricing-section {
+    padding: var(--section-padding);
+    background-color: var(--bg-sand);
+    border-bottom: 1px solid var(--border-color);
+  }
+
+  .pricing-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4rem;
+  }
+
+  .pricing-header {
+    text-align: center;
+    max-width: 600px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.25rem;
+  }
+
+  .section-badge {
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    font-weight: 800;
+    color: var(--accent-green);
+    letter-spacing: 2px;
+  }
+
+  .pricing-title {
+    font-size: clamp(2rem, 4vw, 3rem);
+    line-height: 1.15;
+    letter-spacing: -1px;
+  }
+
+  .pricing-subtitle {
+    font-size: 1.1rem;
+    color: var(--text-muted);
+  }
+
+  /* Pricing Toggle Switch */
+  .toggle-container {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 1rem;
+    background-color: var(--bg-cream);
+    padding: 0.5rem 1rem;
+    border-radius: 9999px;
+    border: 1px solid var(--border-color);
+  }
+
+  .toggle-label {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    transition: color 0.3s;
+    cursor: pointer;
+  }
+
+  .toggle-label.active {
+    color: var(--primary-dark);
+  }
+
+  .pricing-toggle-btn {
+    position: relative;
+    width: 50px;
+    height: 26px;
+    background-color: var(--accent-green);
+    border: none;
+    border-radius: 9999px;
+    cursor: pointer;
+    outline: none;
+    padding: 3px;
+  }
+
+  .toggle-slider {
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 20px;
+    height: 20px;
+    background-color: white;
+    border-radius: 50%;
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+  }
+
+  /* Toggle Active State (Monthly active -> slide right) */
+  .pricing-toggle-btn.monthly-active {
+    background-color: var(--primary-dark);
+  }
+
+  .pricing-toggle-btn.monthly-active .toggle-slider {
+    transform: translateX(24px);
+  }
+
+  /* Cards Grid */
+  .pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2.5rem;
+    width: 100%;
+    max-width: 850px;
+  }
+
+  .pricing-card {
+    background-color: var(--bg-cream);
+    border-radius: 28px;
+    padding: 3rem 2.5rem;
+    border: 2px solid var(--border-color);
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s, box-shadow 0.4s;
+  }
+
+  .pricing-card.active-plan {
+    border-color: var(--accent-green);
+    box-shadow: 0 20px 40px rgba(0, 170, 108, 0.08);
+  }
+
+  .pricing-card:hover {
+    transform: translateY(-6px);
+  }
+
+  .card-badge {
+    position: absolute;
+    top: -14px;
+    right: 3rem;
+    background-color: var(--accent-green);
+    color: white;
+    font-size: 0.75rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 0.35rem 1rem;
+    border-radius: 9999px;
+  }
+
+  .plan-name {
+    font-size: 1.75rem;
+    font-weight: 800;
+    margin-bottom: 0.5rem;
+  }
+
+  .plan-subtitle {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    margin-bottom: 2rem;
+  }
+
+  .price-container {
+    margin-bottom: 2.25rem;
+  }
+
+  .price-main {
+    display: flex;
+    align-items: baseline;
+  }
+
+  .price-currency {
+    font-size: 1.75rem;
+    font-family: var(--font-serif);
+    font-weight: 700;
+    color: var(--primary-dark);
+  }
+
+  .price-amount {
+    font-size: 3.5rem;
+    font-family: var(--font-serif);
+    font-weight: 800;
+    line-height: 1;
+    color: var(--primary-dark);
+  }
+
+  .price-period {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--text-muted);
+  }
+
+  .price-breakdown {
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
+  }
+
+  .plan-features {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    margin-bottom: 2.5rem;
+    flex-grow: 1;
+  }
+
+  .plan-features li {
+    display: flex;
+    gap: 0.85rem;
+    align-items: flex-start;
+    font-size: 0.95rem;
+    font-weight: 600;
+  }
+
+  .check-icon {
+    flex-shrink: 0;
+    margin-top: 3px;
+  }
+
+  .btn-pricing {
+    width: 100%;
+  }
+
+  @media (max-width: 768px) {
+    .pricing-grid {
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
+    }
+    .pricing-card {
+      padding: 2.25rem 1.75rem;
+    }
+  }
+</style>
+
+<script>
+  const toggleBtn = document.getElementById('pricing-toggle');
+  const labelAnnual = document.getElementById('label-annual');
+  const labelMonthly = document.getElementById('label-monthly');
+  const cardAnnual = document.getElementById('card-annual-element');
+  const cardMonthly = document.getElementById('card-monthly-element');
+
+  function setPricingMode(mode: 'annual' | 'monthly') {
+    if (!toggleBtn || !labelAnnual || !labelMonthly || !cardAnnual || !cardMonthly) return;
+
+    if (mode === 'annual') {
+      toggleBtn.classList.remove('monthly-active');
+      labelAnnual.classList.add('active');
+      labelMonthly.classList.remove('active');
+      cardAnnual.classList.add('active-plan');
+      cardMonthly.classList.remove('active-plan');
+    } else {
+      toggleBtn.classList.add('monthly-active');
+      labelAnnual.classList.remove('active');
+      labelMonthly.classList.add('active');
+      cardAnnual.classList.remove('active-plan');
+      cardMonthly.classList.add('active-plan');
+    }
+  }
+
+  if (toggleBtn) {
+    toggleBtn.addEventListener('click', () => {
+      const isMonthly = toggleBtn.classList.contains('monthly-active');
+      setPricingMode(isMonthly ? 'annual' : 'monthly');
+    });
+  }
+
+  if (labelAnnual) labelAnnual.addEventListener('click', () => setPricingMode('annual'));
+  if (labelMonthly) labelMonthly.addEventListener('click', () => setPricingMode('monthly'));
+</script>

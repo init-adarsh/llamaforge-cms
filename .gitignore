@@ -1,0 +1,9 @@
+node_modules/
+dist/
+.vercel/
+.env
+backend/.env
+backend/.tmp/
+backend/build/
+backend/node_modules/
+*.log

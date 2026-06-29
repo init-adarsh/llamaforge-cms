@@ -1,0 +1,189 @@
+---
+import type { ACFFaqBlock } from '../../lib/blocks';
+
+interface Props {
+  block: ACFFaqBlock;
+}
+const { block } = Astro.props;
+
+const faqs = [
+  { question: block.question_1, answer: block.answer_1 },
+  { question: block.question_2, answer: block.answer_2 },
+  { question: block.question_3, answer: block.answer_3 },
+  { question: block.question_4, answer: block.answer_4 },
+  { question: block.question_5, answer: block.answer_5 },
+  { question: block.question_6, answer: block.answer_6 },
+  { question: block.question_7, answer: block.answer_7 },
+  { question: block.question_8, answer: block.answer_8 },
+].filter((f) => f.question && f.answer);
+---
+
+{faqs.length > 0 && (
+  <section class="acf-faq-block">
+    <div class="container acf-faq-container">
+      <div class="faq-header fade-in-up">
+        {block.badge_text && <span class="section-badge">{block.badge_text}</span>}
+        {block.title && <h2 class="faq-title">{block.title}</h2>}
+        {block.description && <p class="faq-subtitle">{block.description}</p>}
+      </div>
+
+      <div class="acf-faq-list fade-in-up" style="animation-delay: 0.15s;">
+        {faqs.map((faq, i) => (
+          <div class="acf-faq-item" data-index={i}>
+            <button class="acf-faq-trigger" aria-expanded="false">
+              <span>{faq.question}</span>
+              <svg class="chevron-icon" width="20" height="20" viewBox="0 0 24 24" fill="none">
+                <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+            <div class="acf-faq-panel">
+              <div class="acf-faq-content">
+                <p>{faq.answer}</p>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+)}
+
+<style>
+  .acf-faq-block {
+    padding: var(--section-padding);
+    background-color: var(--bg-cream);
+    border-bottom: 1px solid var(--border-color);
+  }
+
+  .acf-faq-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4rem;
+  }
+
+  .faq-header {
+    text-align: center;
+    max-width: 600px;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .section-badge {
+    font-size: 0.75rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--accent-green);
+  }
+
+  .faq-title {
+    font-size: clamp(2rem, 4vw, 3rem);
+    line-height: 1.15;
+    letter-spacing: -1px;
+  }
+
+  .faq-subtitle {
+    font-size: 1.1rem;
+    color: var(--text-muted);
+  }
+
+  .acf-faq-list {
+    width: 100%;
+    max-width: 750px;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .acf-faq-item {
+    background-color: var(--bg-sand);
+    border-radius: 16px;
+    border: 1px solid var(--border-color);
+    overflow: hidden;
+    transition: border-color 0.3s;
+  }
+
+  .acf-faq-item:hover {
+    border-color: var(--primary-dark);
+  }
+
+  .acf-faq-item.open {
+    border-color: var(--accent-green);
+    background-color: var(--bg-cream);
+    box-shadow: 0 8px 24px rgba(15, 62, 43, 0.04);
+  }
+
+  .acf-faq-trigger {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 2rem;
+    background: transparent;
+    border: none;
+    font-family: var(--font-sans);
+    font-weight: 700;
+    font-size: 1.05rem;
+    color: var(--primary-dark);
+    text-align: left;
+    cursor: pointer;
+    gap: 1rem;
+  }
+
+  .chevron-icon {
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    flex-shrink: 0;
+    color: var(--primary-dark);
+  }
+
+  .acf-faq-item.open .chevron-icon {
+    transform: rotate(180deg);
+    color: var(--accent-green);
+  }
+
+  .acf-faq-panel {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .acf-faq-content {
+    padding: 0 2rem 1.5rem;
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    line-height: 1.7;
+  }
+</style>
+
+<script>
+  const acfFaqItems = document.querySelectorAll('.acf-faq-item');
+  acfFaqItems.forEach(item => {
+    const trigger = item.querySelector('.acf-faq-trigger');
+    const panel = item.querySelector('.acf-faq-panel') as HTMLDivElement;
+    if (trigger && panel) {
+      trigger.addEventListener('click', () => {
+        const isOpen = item.classList.contains('open');
+        acfFaqItems.forEach(other => {
+          if (other !== item) {
+            other.classList.remove('open');
+            const otherPanel = other.querySelector('.acf-faq-panel') as HTMLDivElement;
+            const otherTrigger = other.querySelector('.acf-faq-trigger');
+            if (otherPanel) otherPanel.style.maxHeight = '0px';
+            if (otherTrigger) otherTrigger.setAttribute('aria-expanded', 'false');
+          }
+        });
+        if (isOpen) {
+          item.classList.remove('open');
+          panel.style.maxHeight = '0px';
+          trigger.setAttribute('aria-expanded', 'false');
+        } else {
+          item.classList.add('open');
+          panel.style.maxHeight = panel.scrollHeight + 'px';
+          trigger.setAttribute('aria-expanded', 'true');
+        }
+      });
+    }
+  });
+</script>

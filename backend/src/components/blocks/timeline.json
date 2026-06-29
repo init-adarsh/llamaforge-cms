@@ -1,0 +1,36 @@
+{
+  "collectionName": "components_blocks_timelines",
+  "info": {
+    "displayName": "Timeline Block",
+    "icon": "clock",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "enabled": {
+      "type": "boolean",
+      "default": true
+    },
+    "badge_text": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "text"
+    },
+    "step_1_title": { "type": "string" },
+    "step_1_description": { "type": "text" },
+    "step_2_title": { "type": "string" },
+    "step_2_description": { "type": "text" },
+    "step_3_title": { "type": "string" },
+    "step_3_description": { "type": "text" },
+    "step_4_title": { "type": "string" },
+    "step_4_description": { "type": "text" },
+    "step_5_title": { "type": "string" },
+    "step_5_description": { "type": "text" },
+    "step_6_title": { "type": "string" },
+    "step_6_description": { "type": "text" }
+  }
+}

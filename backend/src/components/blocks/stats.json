@@ -1,0 +1,33 @@
+{
+  "collectionName": "components_blocks_stats",
+  "info": {
+    "displayName": "Stats Block",
+    "icon": "chart-bar",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "enabled": {
+      "type": "boolean",
+      "default": true
+    },
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "text"
+    },
+    "stat_1_number": { "type": "string" },
+    "stat_1_label": { "type": "string" },
+    "stat_1_description": { "type": "string" },
+    "stat_2_number": { "type": "string" },
+    "stat_2_label": { "type": "string" },
+    "stat_2_description": { "type": "string" },
+    "stat_3_number": { "type": "string" },
+    "stat_3_label": { "type": "string" },
+    "stat_3_description": { "type": "string" },
+    "stat_4_number": { "type": "string" },
+    "stat_4_label": { "type": "string" },
+    "stat_4_description": { "type": "string" }
+  }
+}

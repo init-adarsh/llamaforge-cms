@@ -1,0 +1,658 @@
+---
+---
+<section class="features-section" id="features">
+  <div class="container features-container">
+    <!-- Feature 1: Setup & Automatic Tracking -->
+    <div class="feature-row">
+      <!-- Copy -->
+      <div class="feature-info fade-in-up">
+        <span class="section-badge">Local Fine-Tuning</span>
+        <h2 class="feature-title">A unified console for model optimization.</h2>
+        <p class="feature-text">
+          LlamaForge provides a developer-friendly console and CLI to manage datasets, configure training parameters, run fine-tuning jobs, and track model checkpoints in real-time.
+        </p>
+        <ul class="feature-bullets">
+          <li>
+            <svg class="bullet-check" width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" fill="var(--accent-mint)"/><path d="M9 12L11 14L15 10" stroke="var(--accent-green)" stroke-width="2" stroke-linecap="round"/></svg>
+            <span>Upload training data securely. Supported formats include JSONL, CSV, and Hugging Face datasets.</span>
+          </li>
+          <li>
+            <svg class="bullet-check" width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" fill="var(--accent-mint)"/><path d="M9 12L11 14L15 10" stroke="var(--accent-green)" stroke-width="2" stroke-linecap="round"/></svg>
+            <span>Monitor live loss curves, learning rate decay, and gradient norms during active runs.</span>
+          </li>
+          <li>
+            <svg class="bullet-check" width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" fill="var(--accent-mint)"/><path d="M9 12L11 14L15 10" stroke="var(--accent-green)" stroke-width="2" stroke-linecap="round"/></svg>
+            <span>Save model checkpoints automatically and export weights directly to Hugging Face or Hugging Face compatible formats.</span>
+          </li>
+        </ul>
+        <a href="#pricing" class="btn btn-primary feature-btn">Launch Console</a>
+      </div>
+
+      <!-- CSS Phone Mockup 1: Category Budget App -> LlamaForge Console -->
+      <div class="feature-visual fade-in-up" style="animation-delay: 0.15s;">
+        <div class="phone-wrapper">
+          <div class="phone-frame">
+            <div class="phone-notch"></div>
+            <div class="phone-screen">
+              <!-- Phone Status Bar -->
+              <div class="phone-status-bar">
+                <span>9:41</span>
+                <div class="status-icons">
+                  <svg width="14" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2Z" opacity="0.3"/><path d="M12 6C8.69 6 6 8.69 6 12C6 15.31 8.69 18 12 18C15.31 18 18 15.31 18 12C18 8.69 15.31 6 12 6Z"/></svg>
+                  <svg width="14" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M17 5H3C1.9 5 1 5.9 1 7V17C1 18.1 1.9 19 3 19H17C18.1 19 19 18.1 19 17V7C19 5.9 18.1 5 17 5ZM17 17H3V7H17V17Z"/></svg>
+                </div>
+              </div>
+
+              <!-- Phone App Header -->
+              <div class="app-header">
+                <span class="app-month">LlamaForge</span>
+                <span class="app-amount-ready">100%</span>
+                <span class="app-ready-text">Training Run Epoch 3</span>
+              </div>
+
+              <!-- Category Rows -->
+              <div class="app-body">
+                <div class="category-group">
+                  <h5>Hyperparameters</h5>
+                  
+                  <div class="category-item">
+                    <span class="category-name">Learning Rate</span>
+                    <div class="progress-bar-container">
+                      <div class="progress-bar" style="width: 100%;"></div>
+                    </div>
+                    <span class="category-budgeted">2e-5</span>
+                  </div>
+
+                  <div class="category-item">
+                    <span class="category-name">Batch Size</span>
+                    <div class="progress-bar-container">
+                      <div class="progress-bar" style="width: 80%;"></div>
+                    </div>
+                    <span class="category-budgeted">32</span>
+                  </div>
+                </div>
+
+                <div class="category-group">
+                  <h5>Dataset Status</h5>
+
+                  <div class="category-item">
+                    <span class="category-name">Validation Split</span>
+                    <div class="progress-bar-container">
+                      <div class="progress-bar warning" style="width: 45%;"></div>
+                    </div>
+                    <span class="category-budgeted">10%</span>
+                  </div>
+
+                  <div class="category-item">
+                    <span class="category-name">Format Verification</span>
+                    <div class="progress-bar-container">
+                      <div class="progress-bar" style="width: 100%;"></div>
+                    </div>
+                    <span class="category-budgeted">Passed</span>
+                  </div>
+                </div>
+
+                <div class="category-group">
+                  <h5>Metrics</h5>
+
+                  <div class="category-item">
+                    <span class="category-name">Validation Loss</span>
+                    <div class="progress-bar-container">
+                      <div class="progress-bar alert" style="width: 120%;"></div>
+                    </div>
+                    <span class="category-budgeted" style="color: #d32f2f;">Loss: 0.85</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Feature 2: Flexible & Spend Control -->
+    <div class="feature-row row-reverse">
+      <!-- Copy -->
+      <div class="feature-info fade-in-up">
+        <span class="section-badge">Serverless Serving</span>
+        <h2 class="feature-title">Deploy to high-performance serverless GPUs.</h2>
+        <p class="feature-text">
+          LlamaForge serves your fine-tuned models on secure, auto-scaling GPU replica pools. Pay only for the milliseconds your model is actively processing requests.
+        </p>
+        <ul class="feature-bullets">
+          <li>
+            <svg class="bullet-check" width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" fill="var(--accent-mint)"/><path d="M9 12L11 14L15 10" stroke="var(--accent-green)" stroke-width="2" stroke-linecap="round"/></svg>
+            <span>Query models via a fully OpenAI-compatible completions API endpoint.</span>
+          </li>
+          <li>
+            <svg class="bullet-check" width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" fill="var(--accent-mint)"/><path d="M9 12L11 14L15 10" stroke="var(--accent-green)" stroke-width="2" stroke-linecap="round"/></svg>
+            <span>Scale down to zero GPUs when inactive to eliminate idle server costs.</span>
+          </li>
+          <li>
+            <svg class="bullet-check" width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" fill="var(--accent-mint)"/><path d="M9 12L11 14L15 10" stroke="var(--accent-green)" stroke-width="2" stroke-linecap="round"/></svg>
+            <span>Low-latency response times powered by vLLM engine optimizations.</span>
+          </li>
+        </ul>
+        <a href="#pricing" class="btn btn-primary feature-btn">View API Docs</a>
+      </div>
+
+      <!-- CSS Phone Mockup 2: Overlapping Card -> LlamaForge Endpoint Card -->
+      <div class="feature-visual fade-in-up" style="animation-delay: 0.15s;">
+        <div class="phone-wrapper">
+          <!-- Overlapping Green Card -->
+          <div class="credit-card-floating">
+            <div class="card-logo">llamaforge</div>
+            <div class="card-chip"></div>
+            <div class="card-number">Endpoint: api.llamaforge.com</div>
+            <div class="card-footer">
+              <span class="card-holder">Llama-3-8B-tuned</span>
+              <span class="card-brand">vLLM</span>
+            </div>
+          </div>
+
+          <div class="phone-frame">
+            <div class="phone-notch"></div>
+            <div class="phone-screen screen-green">
+              <!-- Phone Status Bar -->
+              <div class="phone-status-bar status-light">
+                <span>9:41</span>
+                <div class="status-icons">
+                  <svg width="14" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2Z" opacity="0.3"/><path d="M12 6C8.69 6 6 8.69 6 12C6 15.31 8.69 18 12 18C15.31 18 18 15.31 18 12C18 8.69 15.31 6 12 6Z"/></svg>
+                  <svg width="14" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M17 5H3C1.9 5 1 5.9 1 7V17C1 18.1 1.9 19 3 19H17C18.1 19 19 18.1 19 17V7C19 5.9 18.1 5 17 5ZM17 17H3V7H17V17Z"/></svg>
+                </div>
+              </div>
+
+              <!-- Spending Circle Info -->
+              <div class="card-view-header">
+                <h3>Serverless Endpoint</h3>
+                <div class="spend-circle">
+                  <span class="spend-amount">READY</span>
+                  <span class="spend-label">Endpoint Status</span>
+                </div>
+              </div>
+
+              <!-- Transactions -->
+              <div class="transactions-list">
+                <h4>Endpoint Query Metrics</h4>
+                <div class="tx-item">
+                  <div class="tx-info">
+                    <span class="tx-title">Inference Uptime</span>
+                    <span class="tx-category">99.9%</span>
+                  </div>
+                  <span class="tx-amount" style="color: var(--accent-green)">Ready</span>
+                </div>
+                <div class="tx-item">
+                  <div class="tx-info">
+                    <span class="tx-title">Avg P95 Latency</span>
+                    <span class="tx-category">240ms</span>
+                  </div>
+                  <span class="tx-amount">Active</span>
+                </div>
+                <div class="tx-item">
+                  <div class="tx-info">
+                    <span class="tx-title">Request Count</span>
+                    <span class="tx-category">4.2M / day</span>
+                  </div>
+                  <span class="tx-amount">Online</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .features-section {
+    padding: var(--section-padding);
+    background-color: var(--bg-cream);
+    border-bottom: 1px solid var(--border-color);
+  }
+
+  .features-container {
+    display: flex;
+    flex-direction: column;
+    gap: 8rem;
+  }
+
+  .feature-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: center;
+  }
+
+  .row-reverse {
+    direction: rtl;
+  }
+
+  .row-reverse .feature-info,
+  .row-reverse .feature-visual {
+    direction: ltr; /* Reset text direction */
+  }
+
+  /* Info Column */
+  .feature-info {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .feature-title {
+    font-size: clamp(2rem, 4vw, 2.75rem);
+    line-height: 1.15;
+    letter-spacing: -1px;
+  }
+
+  .feature-text {
+    font-size: 1.05rem;
+  }
+
+  .feature-bullets {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin: 0.5rem 0;
+  }
+
+  .feature-bullets li {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+    font-size: 0.95rem;
+    font-weight: 600;
+  }
+
+  .bullet-check {
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .feature-btn {
+    align-self: flex-start;
+    margin-top: 0.5rem;
+  }
+
+  /* Phone Mockup Styling */
+  .feature-visual {
+    display: flex;
+    justify-content: center;
+    position: relative;
+  }
+
+  .phone-wrapper {
+    position: relative;
+    width: 290px;
+  }
+
+  .phone-frame {
+    width: 290px;
+    height: 590px;
+    background-color: #1a1a1a;
+    border-radius: 40px;
+    padding: 10px;
+    box-shadow: 0 25px 50px rgba(15, 62, 43, 0.12), 0 5px 15px rgba(0, 0, 0, 0.08);
+    border: 4px solid #333;
+    position: relative;
+  }
+
+  .phone-notch {
+    position: absolute;
+    top: 18px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90px;
+    height: 25px;
+    background-color: #000;
+    border-radius: 20px;
+    z-index: 10;
+  }
+
+  .phone-screen {
+    width: 100%;
+    height: 100%;
+    background-color: var(--bg-cream);
+    border-radius: 32px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    border: 1px solid rgba(0,0,0,0.1);
+  }
+
+  .phone-status-bar {
+    height: 35px;
+    padding: 0 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--primary-dark);
+    z-index: 5;
+  }
+
+  .status-icons {
+    display: flex;
+    gap: 4px;
+    align-items: center;
+  }
+
+  /* Screen 1 (Category Budget App) */
+  .app-header {
+    background-color: var(--accent-mint);
+    padding: 1.5rem;
+    padding-top: 1rem;
+    text-align: center;
+    border-bottom: 1px solid var(--border-color);
+  }
+
+  .app-month {
+    font-size: 0.75rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    color: var(--primary-dark);
+    letter-spacing: 1px;
+    display: block;
+    margin-bottom: 0.25rem;
+  }
+
+  .app-amount-ready {
+    font-size: 2.25rem;
+    font-family: var(--font-serif);
+    font-weight: 800;
+    color: var(--accent-green);
+    display: block;
+    line-height: 1;
+  }
+
+  .app-ready-text {
+    font-size: 0.7rem;
+    font-weight: 800;
+    color: var(--primary-dark);
+  }
+
+  .app-body {
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    overflow-y: auto;
+    height: 100%;
+  }
+
+  .category-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+  }
+
+  .category-group h5 {
+    font-size: 0.75rem;
+    font-weight: 800;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .category-item {
+    display: grid;
+    grid-template-columns: 1fr 60px;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .category-name {
+    font-size: 0.8rem;
+    font-weight: 700;
+    grid-column: span 2;
+  }
+
+  .progress-bar-container {
+    height: 6px;
+    background-color: var(--bg-sand);
+    border-radius: 9999px;
+    overflow: hidden;
+    border: 1px solid var(--border-color);
+  }
+
+  .progress-bar {
+    height: 100%;
+    background-color: var(--accent-green);
+    border-radius: 9999px;
+  }
+
+  .progress-bar.warning {
+    background-color: #e2a106;
+  }
+
+  .progress-bar.alert {
+    background-color: #d32f2f;
+  }
+
+  .category-budgeted {
+    font-size: 0.8rem;
+    font-weight: 800;
+    text-align: right;
+    color: var(--primary-dark);
+  }
+
+  /* Screen 2 (Transactions & Card View) */
+  .screen-green {
+    background-color: var(--primary-dark);
+    color: var(--text-light);
+  }
+
+  .status-light {
+    color: var(--text-light);
+  }
+
+  .card-view-header {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    text-align: center;
+  }
+
+  .card-view-header h3 {
+    font-size: 0.8rem;
+    color: var(--accent-mint);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .spend-circle {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    border: 6px solid var(--accent-green);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(255, 255, 255, 0.05);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  }
+
+  .spend-amount {
+    font-size: 1.5rem;
+    font-weight: 800;
+  }
+
+  .spend-label {
+    font-size: 0.65rem;
+    font-weight: 700;
+    color: var(--accent-mint);
+  }
+
+  .transactions-list {
+    padding: 1.25rem;
+    background-color: var(--bg-cream);
+    color: var(--text-dark);
+    border-radius: 28px 28px 0 0;
+    margin-top: auto;
+    height: 200px;
+  }
+
+  .transactions-list h4 {
+    font-size: 0.8rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    letter-spacing: 0.5px;
+    margin-bottom: 0.75rem;
+  }
+
+  .tx-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.6rem 0;
+    border-bottom: 1px solid var(--border-color);
+  }
+
+  .tx-item:last-child {
+    border-bottom: none;
+  }
+
+  .tx-info {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .tx-title {
+    font-size: 0.8rem;
+    font-weight: 700;
+  }
+
+  .tx-category {
+    font-size: 0.65rem;
+    color: var(--text-muted);
+    font-weight: 600;
+  }
+
+  .tx-amount {
+    font-size: 0.85rem;
+    font-weight: 800;
+    color: var(--primary-dark);
+  }
+
+  /* Floating Credit Card Mockup */
+  .credit-card-floating {
+    position: absolute;
+    width: 250px;
+    height: 155px;
+    background: linear-gradient(135deg, var(--accent-green) 0%, var(--primary-dark) 100%);
+    border-radius: 16px;
+    padding: 1.25rem;
+    color: white;
+    z-index: 12;
+    box-shadow: -15px 20px 40px rgba(0, 0, 0, 0.25), 0 2px 4px rgba(0,0,0,0.1);
+    top: 250px;
+    left: -120px;
+    transform: rotate(-15deg);
+    border: 1px solid rgba(255,255,255,0.15);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s;
+  }
+
+  .credit-card-floating:hover {
+    transform: rotate(-10deg) scale(1.05) translateY(-10px);
+    box-shadow: -20px 25px 50px rgba(0, 0, 0, 0.3);
+  }
+
+  .card-logo {
+    font-weight: 900;
+    font-size: 1rem;
+    letter-spacing: -0.5px;
+  }
+
+  .card-chip {
+    width: 32px;
+    height: 24px;
+    background-color: #ffd700;
+    border-radius: 4px;
+    box-shadow: inset 0 1px 1px rgba(255,255,255,0.5);
+  }
+
+  .card-number {
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    margin: 0.5rem 0;
+  }
+
+  .card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .card-holder {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    font-weight: 600;
+    letter-spacing: 1px;
+  }
+
+  .card-brand {
+    font-style: italic;
+    font-weight: 800;
+    font-size: 0.95rem;
+  }
+
+  /* Responsive styling */
+  @media (max-width: 992px) {
+    .features-container {
+      gap: 5rem;
+    }
+    .feature-row {
+      grid-template-columns: 1fr;
+      gap: 3.5rem;
+    }
+    .row-reverse {
+      direction: ltr;
+    }
+    .feature-btn {
+      align-self: center;
+    }
+    .feature-info {
+      text-align: center;
+      align-items: center;
+    }
+    .feature-bullets {
+      text-align: left;
+    }
+  }
+
+  @media (max-width: 576px) {
+    .credit-card-floating {
+      width: 200px;
+      height: 124px;
+      padding: 0.85rem;
+      left: -60px;
+      top: 260px;
+    }
+    .card-number {
+      font-size: 0.7rem;
+    }
+    .card-chip {
+      width: 24px;
+      height: 18px;
+    }
+    .phone-wrapper {
+      width: 240px;
+    }
+    .phone-frame {
+      width: 240px;
+      height: 490px;
+    }
+  }
+</style>

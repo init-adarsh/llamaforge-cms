@@ -1,0 +1,197 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import BlockRenderer from '../../components/BlockRenderer.astro';
+import { fetchPostBySlug, type WPPost } from '../../lib/wordpress';
+import { hasEnabledBlocks } from '../../lib/blocks';
+
+const { slug } = Astro.params;
+
+// Always fetch live from WordPress on every request (SSR)
+const post = await fetchPostBySlug(slug!);
+
+// If WordPress doesn't have a post with this slug, return a real 404
+if (!post) {
+  return Astro.redirect('/404');
+}
+
+const useBlocks = hasEnabledBlocks(post.acf);
+---
+
+<Layout title={`${post.title.rendered} - LlamaForge`} description={post.excerpt.rendered.replace(/<[^>]*>/g, '')}>
+  <Header />
+
+  {useBlocks ? (
+    <main class="blocks-page-view">
+      <BlockRenderer acf={post.acf!} />
+    </main>
+  ) : (
+    <main class="post-detail-page">
+      <article class="post-container">
+        <!-- Back Link -->
+        <a href="/" class="back-link">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M19 12H5M5 12l6-6M5 12l6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Back to Home
+        </a>
+
+        <!-- Article Header -->
+        <header class="post-header">
+          <div class="post-meta">
+            <span class="post-date">
+              {new Date(post.date).toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+              })}
+            </span>
+            <span class="post-category">AI Engineering</span>
+          </div>
+          <h1 class="post-title" set:html={post.title.rendered} />
+        </header>
+
+        <!-- Divider -->
+        <div class="post-divider"></div>
+
+        <!-- Article Body (parsed WordPress HTML) -->
+        <div class="post-content" set:html={post.content.rendered} />
+      </article>
+    </main>
+  )}
+
+  <Footer />
+</Layout>
+
+
+<style>
+  .blocks-page-view {
+    padding-top: 70px;
+    min-height: calc(100vh - 70px);
+  }
+
+  .post-detail-page {
+    padding-top: 120px; /* Header spacing */
+    padding-bottom: 6rem;
+    background-color: var(--bg-cream);
+    min-height: calc(100vh - 70px);
+  }
+
+  .post-container {
+    max-width: 750px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+  }
+
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    margin-bottom: 2.5rem;
+    transition: color 0.2s;
+  }
+
+  .back-link:hover {
+    color: var(--accent-green);
+  }
+
+  .post-header {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  .post-meta {
+    display: flex;
+    gap: 1.5rem;
+    font-size: 0.85rem;
+    font-weight: 700;
+  }
+
+  .post-date {
+    color: var(--text-muted);
+  }
+
+  .post-category {
+    color: var(--accent-green);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .post-title {
+    font-size: clamp(2rem, 5vw, 3rem);
+    line-height: 1.15;
+    letter-spacing: -1.5px;
+    color: var(--primary-dark);
+  }
+
+  .post-divider {
+    height: 1px;
+    background-color: var(--border-color);
+    margin-bottom: 2.5rem;
+  }
+
+  /* WordPress HTML Content Formatting */
+  .post-content {
+    line-height: 1.8;
+    color: var(--text-dark);
+    font-size: 1.1rem;
+  }
+
+  /* Target child HTML tags rendered from WordPress */
+  .post-content :global(p) {
+    margin-bottom: 1.75rem;
+  }
+
+  .post-content :global(h2) {
+    font-size: 1.8rem;
+    color: var(--primary-dark);
+    margin-top: 2.5rem;
+    margin-bottom: 1.25rem;
+    letter-spacing: -0.5px;
+  }
+
+  .post-content :global(h3) {
+    font-size: 1.4rem;
+    color: var(--primary-dark);
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+  }
+
+  .post-content :global(ul), .post-content :global(ol) {
+    margin-bottom: 1.75rem;
+    padding-left: 2rem;
+  }
+
+  .post-content :global(li) {
+    margin-bottom: 0.5rem;
+  }
+
+  .post-content :global(a) {
+    color: var(--accent-green);
+    font-weight: 700;
+    text-decoration: underline;
+  }
+
+  .post-content :global(a:hover) {
+    color: var(--primary-dark);
+  }
+
+  .post-content :global(blockquote) {
+    margin: 2.5rem 0;
+    padding: 1rem 2rem;
+    background-color: var(--bg-sand);
+    border-left: 4px solid var(--accent-green);
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 1.25rem;
+    border-radius: 0 12px 12px 0;
+  }
+
+  .post-content :global(blockquote p) {
+    margin-bottom: 0;
+  }
+</style>

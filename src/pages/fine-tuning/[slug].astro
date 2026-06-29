@@ -1,0 +1,557 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import { fetchPageBySlug, fetchPages, type WPPage } from '../../lib/wordpress';
+
+const { slug } = Astro.params;
+
+// Always fetch live from WordPress on every request (SSR)
+const page = await fetchPageBySlug(slug!);
+
+if (!page) {
+  return Astro.redirect('/404');
+}
+
+// Verify this page belongs to the 'fine-tuning' parent
+const allPages = await fetchPages();
+const fineTuningParent = allPages.find((p) => p.slug === 'fine-tuning');
+const fineTuningParentId = fineTuningParent ? fineTuningParent.id : -1;
+const pageParentId = page.parent;
+
+if (pageParentId !== fineTuningParentId) {
+  return Astro.redirect('/404');
+}
+---
+
+<Layout title={`${page.title.rendered} - Fine-Tuning Recipe`} description={page.excerpt.rendered.replace(/<[^>]*>/g, '')}>
+  <Header />
+
+  <main class="cert-detail-view">
+    <div class="cert-hero-section">
+      <div class="container">
+        <a href="/#features" class="back-link">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M19 12H5M5 12l6-6M5 12l6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Back to Tuning
+        </a>
+        <span class="cert-badge-tag">Tuned Optimizer</span>
+        <h1 class="cert-main-title" set:html={page.title.rendered} />
+        <p class="cert-intro-text">
+          Accelerate model adaptation with LlamaForge's automated serverless fine-tuning framework.
+        </p>
+      </div>
+    </div>
+
+    <div class="container cert-layout-grid">
+      <!-- Left Column: Content & Roadmap -->
+      <article class="cert-main-content">
+        <div class="content-body" set:html={page.content.rendered} />
+
+        <!-- Roadmap / Process Stages -->
+        <section class="cert-roadmap-section">
+          <h3 class="section-subtitle">Fine-Tuning Lifecycle</h3>
+          <p class="section-description">Our streamlined, 4-stage automated training cycle ensures custom models are optimized and deployed.</p>
+          
+          <div class="roadmap-timeline">
+            <div class="roadmap-step">
+              <div class="step-num">01</div>
+              <div class="step-content">
+                <h4>Data Prep & Filtering</h4>
+                <p>Upload datasets in JSONL format. Our pipeline cleans, tokenizes, and formats your samples for optimal training.</p>
+              </div>
+            </div>
+            
+            <div class="roadmap-step">
+              <div class="step-num">02</div>
+              <div class="step-content">
+                <h4>Hyperparameter Setup</h4>
+                <p>Configure learning rate schedulers, weight decay, target modules (Q, V, K projection), and training epochs.</p>
+              </div>
+            </div>
+
+            <div class="roadmap-step">
+              <div class="step-num">03</div>
+              <div class="step-content">
+                <h4>GPU Training Run</h4>
+                <p>Execute training on serverless A10G/H100 clusters. Monitor real-time cross-entropy loss and gradient norms.</p>
+              </div>
+            </div>
+
+            <div class="roadmap-step">
+              <div class="step-num">04</div>
+              <div class="step-content">
+                <h4>Evaluation & API Deploy</h4>
+                <p>Validate accuracy on domain benchmarks. Instantly export weights or launch as a secure API endpoint.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Preparation Checklist -->
+        <section class="cert-prep-checklist">
+          <h3 class="section-subtitle">Pre-Training Dataset Checklist</h3>
+          <p class="section-description">Ensure your datasets conform to these formatting rules before initiating training:</p>
+          
+          <div class="checklist-grid">
+            <div class="checklist-item">
+              <input type="checkbox" id="check-1" checked disabled />
+              <label for="check-1">
+                <strong>JSONL Format Validation</strong>
+                <span>Ensure every sample is a valid JSON object with matching key fields.</span>
+              </label>
+            </div>
+            <div class="checklist-item">
+              <input type="checkbox" id="check-2" checked disabled />
+              <label for="check-2">
+                <strong>Tokens per Sample Count</strong>
+                <span>Verify sequence lengths fit within the base model's context window.</span>
+              </label>
+            </div>
+            <div class="checklist-item">
+              <input type="checkbox" id="check-3" disabled />
+              <label for="check-3">
+                <strong>Clean Quality Filters</strong>
+                <span>Strip duplicate entries, HTML markup, and incomplete prompts.</span>
+              </label>
+            </div>
+            <div class="checklist-item">
+              <input type="checkbox" id="check-4" disabled />
+              <label for="check-4">
+                <strong>Sufficient Sample Volume</strong>
+                <span>Minimum of 500 high-quality instructions recommended for stable convergence.</span>
+              </label>
+            </div>
+          </div>
+        </section>
+      </article>
+
+      <!-- Right Column: Sidebar -->
+      <aside class="cert-sidebar">
+        <!-- Accreditation Card -->
+        <div class="sidebar-card accreditation-card">
+          <h4>Enterprise Framework</h4>
+          <p class="card-desc">LlamaForge fine-tuning executes under strict security protocols with enterprise compliance.</p>
+          
+          <div class="accreditation-seals">
+            <div class="seal">
+              <span class="seal-logo">HF</span>
+              <span class="seal-label">HuggingFace Ready</span>
+            </div>
+            <div class="seal">
+              <span class="seal-logo">CUDA</span>
+              <span class="seal-label">CUDA Optimized</span>
+            </div>
+          </div>
+          
+          <div class="divider"></div>
+          
+          <ul class="cert-meta-list">
+            <li>
+              <span class="meta-label">Format Compatibility</span>
+              <span class="meta-val">GGUF, SafeTensors, PyTorch</span>
+            </li>
+            <li>
+              <span class="meta-label">Model License</span>
+              <span class="meta-val">Open Source Ownership</span>
+            </li>
+            <li>
+              <span class="meta-label">API Format</span>
+              <span class="meta-val">OpenAI Compatible SDK</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Consultation Card -->
+        <div class="sidebar-card quote-cta-card">
+          <h4>Start Training</h4>
+          <p class="card-desc">Initiate a serverless GPU training run optimized for your custom dataset size.</p>
+          <a href="/#pricing" class="btn btn-primary sidebar-cta">Launch Training Run</a>
+          <span class="secure-badge">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Secure GPU Compute Assured
+          </span>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <Footer />
+</Layout>
+
+<style>
+  .cert-detail-view {
+    padding-top: 70px;
+    background-color: var(--bg-cream);
+    min-height: calc(100vh - 70px);
+  }
+
+  .cert-hero-section {
+    background-color: var(--primary-dark);
+    color: var(--text-light);
+    padding: 6rem 0 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cert-hero-section::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -10%;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(0,170,108,0.15) 0%, rgba(0,0,0,0) 70%);
+    pointer-events: none;
+  }
+
+  .cert-hero-section .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: rgba(252, 251, 250, 0.7);
+    margin-bottom: 2rem;
+  }
+
+  .cert-hero-section .back-link:hover {
+    color: var(--text-light);
+  }
+
+  .cert-badge-tag {
+    font-size: 0.75rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    color: var(--accent-green);
+    letter-spacing: 2px;
+    margin-bottom: 0.75rem;
+    display: inline-block;
+  }
+
+  .cert-main-title {
+    font-size: clamp(2.25rem, 6vw, 3.5rem);
+    line-height: 1.15;
+    letter-spacing: -1.5px;
+    color: var(--text-light);
+    margin-bottom: 1.5rem;
+    max-width: 800px;
+  }
+
+  .cert-intro-text {
+    font-size: clamp(1.1rem, 2vw, 1.35rem);
+    color: rgba(252, 251, 250, 0.85);
+    max-width: 650px;
+    line-height: 1.5;
+  }
+
+  .cert-layout-grid {
+    display: grid;
+    grid-template-columns: 1.25fr 0.75fr;
+    gap: 5rem;
+    padding-top: 4rem;
+    padding-bottom: 6rem;
+    align-items: flex-start;
+  }
+
+  /* Content styles */
+  .cert-main-content {
+    display: flex;
+    flex-direction: column;
+    gap: 3.5rem;
+  }
+
+  .content-body {
+    line-height: 1.8;
+    color: var(--text-dark);
+    font-size: 1.05rem;
+  }
+
+  .content-body :global(p) {
+    margin-bottom: 1.5rem;
+  }
+
+  .content-body :global(h2) {
+    font-size: 1.6rem;
+    color: var(--primary-dark);
+    margin-top: 2.25rem;
+    margin-bottom: 1rem;
+  }
+
+  .content-body :global(ul), .content-body :global(ol) {
+    margin-bottom: 1.5rem;
+    padding-left: 2rem;
+  }
+
+  .content-body :global(li) {
+    margin-bottom: 0.4rem;
+  }
+
+  .content-body :global(a) {
+    color: var(--accent-green);
+    text-decoration: underline;
+    font-weight: 700;
+  }
+
+  /* Roadmap Section */
+  .cert-roadmap-section {
+    border-top: 1px solid var(--border-color);
+    padding-top: 3rem;
+  }
+
+  .section-subtitle {
+    font-size: 1.75rem;
+    color: var(--primary-dark);
+    margin-bottom: 0.5rem;
+  }
+
+  .section-description {
+    color: var(--text-muted);
+    font-size: 1rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .roadmap-timeline {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    position: relative;
+    padding-left: 2rem;
+  }
+
+  .roadmap-timeline::before {
+    content: '';
+    position: absolute;
+    left: 8px;
+    top: 12px;
+    bottom: 12px;
+    width: 2px;
+    background-color: var(--border-color);
+  }
+
+  .roadmap-step {
+    display: flex;
+    gap: 2rem;
+    position: relative;
+  }
+
+  .roadmap-step::before {
+    content: '';
+    position: absolute;
+    left: -29px;
+    top: 8px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: var(--accent-green);
+    border: 3px solid var(--bg-cream);
+    box-shadow: 0 0 0 4px rgba(0, 170, 108, 0.1);
+  }
+
+  .step-num {
+    font-family: var(--font-serif);
+    font-size: 1.5rem;
+    font-weight: 900;
+    color: var(--accent-green);
+    line-height: 1;
+    min-width: 30px;
+  }
+
+  .step-content h4 {
+    font-family: var(--font-sans);
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: var(--primary-dark);
+    margin-bottom: 0.5rem;
+  }
+
+  .step-content p {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+
+  /* Prep Checklist */
+  .cert-prep-checklist {
+    border-top: 1px solid var(--border-color);
+    padding-top: 3rem;
+  }
+
+  .checklist-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+
+  .checklist-item {
+    display: flex;
+    gap: 1rem;
+    background-color: var(--bg-sand);
+    padding: 1.5rem;
+    border-radius: 16px;
+    border: 1px solid var(--border-color);
+  }
+
+  .checklist-item input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    border-radius: 6px;
+    border: 2px solid var(--border-color);
+    margin-top: 0.2rem;
+    accent-color: var(--accent-green);
+    cursor: not-allowed;
+  }
+
+  .checklist-item label {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .checklist-item label strong {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--primary-dark);
+  }
+
+  .checklist-item label span {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    line-height: 1.4;
+  }
+
+  /* Sidebar styling */
+  .cert-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+    position: sticky;
+    top: 100px;
+  }
+
+  .sidebar-card {
+    background-color: var(--bg-sand);
+    border-radius: 24px;
+    padding: 2.5rem 2rem;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 10px 20px rgba(15, 62, 43, 0.02);
+  }
+
+  .sidebar-card h4 {
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+    color: var(--primary-dark);
+  }
+
+  .card-desc {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    margin-bottom: 1.5rem;
+    line-height: 1.5;
+  }
+
+  .accreditation-seals {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .seal {
+    flex: 1;
+    background-color: var(--primary-dark);
+    color: var(--text-light);
+    padding: 1rem;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    border: 1px solid rgba(255,255,255,0.1);
+  }
+
+  .seal-logo {
+    font-family: var(--font-serif);
+    font-size: 1.35rem;
+    font-weight: 900;
+    color: var(--accent-mint);
+    letter-spacing: 1px;
+    line-height: 1;
+    margin-bottom: 0.25rem;
+  }
+
+  .seal-label {
+    font-size: 0.65rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: rgba(252, 251, 250, 0.6);
+  }
+
+  .divider {
+    height: 1px;
+    background-color: var(--border-color);
+    margin: 1.5rem 0;
+  }
+
+  .cert-meta-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .cert-meta-list li {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .meta-label {
+    font-size: 0.75rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    letter-spacing: 0.5px;
+  }
+
+  .meta-val {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--primary-dark);
+  }
+
+  .quote-cta-card {
+    background-color: var(--accent-mint);
+    border-color: rgba(0, 170, 108, 0.2);
+  }
+
+  .sidebar-cta {
+    width: 100%;
+    margin-bottom: 1rem;
+  }
+
+  .secure-badge {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.35rem;
+    font-size: 0.75rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--primary-dark);
+  }
+
+  @media (max-width: 992px) {
+    .cert-layout-grid {
+      grid-template-columns: 1fr;
+      gap: 3.5rem;
+    }
+    .cert-sidebar {
+      position: static;
+    }
+    .checklist-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

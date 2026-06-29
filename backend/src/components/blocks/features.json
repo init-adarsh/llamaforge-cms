@@ -1,0 +1,36 @@
+{
+  "collectionName": "components_blocks_features",
+  "info": {
+    "displayName": "Features Grid",
+    "icon": "grid",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "enabled": {
+      "type": "boolean",
+      "default": true
+    },
+    "badge_text": { "type": "string" },
+    "title": { "type": "string" },
+    "description": { "type": "text" },
+    "feature_1_icon": { "type": "string" },
+    "feature_1_title": { "type": "string" },
+    "feature_1_text": { "type": "text" },
+    "feature_2_icon": { "type": "string" },
+    "feature_2_title": { "type": "string" },
+    "feature_2_text": { "type": "text" },
+    "feature_3_icon": { "type": "string" },
+    "feature_3_title": { "type": "string" },
+    "feature_3_text": { "type": "text" },
+    "feature_4_icon": { "type": "string" },
+    "feature_4_title": { "type": "string" },
+    "feature_4_text": { "type": "text" },
+    "feature_5_icon": { "type": "string" },
+    "feature_5_title": { "type": "string" },
+    "feature_5_text": { "type": "text" },
+    "feature_6_icon": { "type": "string" },
+    "feature_6_title": { "type": "string" },
+    "feature_6_text": { "type": "text" }
+  }
+}

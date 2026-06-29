@@ -1,0 +1,35 @@
+{
+  "collectionName": "components_blocks_ctas",
+  "info": {
+    "displayName": "CTA Block",
+    "icon": "button",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "enabled": {
+      "type": "boolean",
+      "default": true
+    },
+    "variant": {
+      "type": "enumeration",
+      "enum": [
+        "dark",
+        "green",
+        "light"
+      ],
+      "default": "dark"
+    },
+    "headline": {
+      "type": "string",
+      "required": true
+    },
+    "description": {
+      "type": "text"
+    },
+    "btn_text": { "type": "string" },
+    "btn_url": { "type": "string" },
+    "secondary_btn_text": { "type": "string" },
+    "secondary_btn_url": { "type": "string" }
+  }
+}

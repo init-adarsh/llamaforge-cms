@@ -1,0 +1,511 @@
+---
+import { fetchPages, type WPPage } from '../lib/wordpress';
+
+// Fetch all pages dynamically from WordPress REST API
+const pages = await fetchPages();
+
+// Helper to determine URL path for pages based on parent category
+function getPageUrl(page: WPPage, allPages: WPPage[]) {
+  const modelsParent = allPages.find(p => p.slug === 'models');
+  const fineTuningParent = allPages.find(p => p.slug === 'fine-tuning');
+  const deploymentsParent = allPages.find(p => p.slug === 'deployments');
+
+  if (page.parent !== 0) {
+    if (modelsParent && page.parent === modelsParent.id) {
+      return `/models/${page.slug}`;
+    }
+    if (fineTuningParent && page.parent === fineTuningParent.id) {
+      return `/fine-tuning/${page.slug}`;
+    }
+    if (deploymentsParent && page.parent === deploymentsParent.id) {
+      return `/deployments/${page.slug}`;
+    }
+    return `/${page.slug}`;
+  }
+  return `/${page.slug}`;
+}
+
+// Get child pages for a parent ID
+const getChildren = (parentId: number) => {
+  if (parentId <= 0) return [];
+  return pages.filter(p => p.parent === parentId);
+};
+
+// Filter top-level pages for dynamic addition
+const parentPages = pages.filter(p => p.parent === 0 && p.slug !== 'sample-page');
+const definedSlugs = ['models', 'fine-tuning', 'deployments', 'about-us', 'contact-us', 'sample-page', 'home', 'standards', 'certifications', 'countries'];
+const extraPages = parentPages.filter(p => !definedSlugs.includes(p.slug));
+
+// Build main navigation items
+const menuItems = [
+  {
+    label: 'Models',
+    url: '/models',
+    slug: 'models',
+    children: []
+  },
+  {
+    label: 'Fine-Tuning',
+    url: '/fine-tuning',
+    slug: 'fine-tuning',
+    children: []
+  },
+  {
+    label: 'Deployments',
+    url: '/deployments',
+    slug: 'deployments',
+    children: []
+  },
+  // Dynamically inject any other parent pages from WP
+  ...extraPages.map(p => ({
+    label: p.title.rendered,
+    url: `/${p.slug}`,
+    slug: p.slug,
+    children: []
+  })),
+  {
+    label: 'Blogs',
+    url: '/#blog',
+    slug: 'blog',
+    children: []
+  },
+  {
+    label: 'About Us',
+    url: '/about-us',
+    slug: 'about-us',
+    children: []
+  },
+  {
+    label: 'Contact',
+    url: '/contact-us',
+    slug: 'contact-us',
+    children: []
+  }
+];
+---
+
+<header class="header">
+  <div class="container header-container">
+    <!-- Logo -->
+    <a href="/" class="logo">
+      <svg width="32" height="32" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M50 95C74.8528 95 95 74.8528 95 50C95 25.1472 74.8528 5 50 5C25.1472 5 5 25.1472 5 50C5 74.8528 25.1472 95 50 95Z" fill="#0f3e2b"/>
+        <path d="M50 15C50 15 25 35 25 55C25 75 45 85 50 85C55 85 75 75 75 55C75 35 50 15 50 15Z" fill="#00aa6c"/>
+        <path d="M50 25C50 25 35 40 35 55C35 70 45 77 50 77C55 77 65 70 65 55C65 40 50 25 50 25Z" fill="#e5f6f0"/>
+      </svg>
+      <span class="logo-text">llamaforge</span>
+    </a>
+
+    <!-- Desktop Navigation -->
+    <nav class="nav-desktop">
+      <ul class="nav-list">
+        {menuItems.map(item => (
+          item.children.length > 0 ? (
+            <li class="nav-item-dropdown">
+              <a href={item.url} class="nav-link dropdown-toggle">
+                {item.label}
+                <svg class="dropdown-icon" width="10" height="6" viewBox="0 0 10 6" fill="none">
+                  <path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </a>
+              <ul class="dropdown-menu">
+                {item.children.map(child => (
+                  <li>
+                    <a href={getPageUrl(child, pages)} class="dropdown-item">
+                      {child.title.rendered}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </li>
+          ) : (
+            <li><a href={item.url} class="nav-link">{item.label}</a></li>
+          )
+        ))}
+      </ul>
+    </nav>
+
+    <!-- CTAs -->
+    <div class="nav-ctas">
+      <a href="#login" class="nav-link-login">Developer Console</a>
+      <a href="#pricing" class="btn btn-primary btn-header">Start Tuning</a>
+      <button class="mobile-toggle" aria-label="Toggle navigation" id="mobile-toggle">
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile Drawer -->
+  <div class="mobile-drawer" id="mobile-drawer">
+    <nav class="nav-mobile">
+      <ul>
+        {menuItems.map(item => (
+          item.children.length > 0 ? (
+            <li class="mobile-dropdown">
+              <button class="mobile-dropdown-toggle">
+                {item.label}
+                <svg class="mobile-dropdown-icon" width="12" height="8" viewBox="0 0 12 8" fill="none">
+                  <path d="M1 1.5L6 6.5L11 1.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+              <ul class="mobile-dropdown-menu">
+                <li><a href={item.url} class="mobile-nav-link-sub val-parent">All {item.label}</a></li>
+                {item.children.map(child => (
+                  <li>
+                    <a href={getPageUrl(child, pages)} class="mobile-nav-link-sub">
+                      {child.title.rendered}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </li>
+          ) : (
+            <li><a href={item.url} class="mobile-nav-link">{item.label}</a></li>
+          )
+        ))}
+        <li class="mobile-divider"></li>
+        <li><a href="#login" class="mobile-nav-link">Developer Console</a></li>
+        <li><a href="#pricing" class="btn btn-primary mobile-cta-btn">Start Tuning</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 70px;
+    background-color: var(--bg-cream);
+    border-bottom: 1px solid var(--border-color);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    transition: background-color 0.3s ease;
+  }
+
+  .header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+  }
+
+  /* Logo */
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 800;
+    font-size: 1.5rem;
+    color: var(--primary-dark);
+    font-family: var(--font-sans);
+  }
+
+  .logo-text {
+    letter-spacing: -1px;
+    font-weight: 900;
+  }
+
+  /* Navigation */
+  .nav-list {
+    display: flex;
+    list-style: none;
+    gap: 2.25rem;
+    margin: 0;
+    padding: 0;
+  }
+
+  .nav-link {
+    font-family: var(--font-sans);
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: var(--primary-dark);
+    position: relative;
+    padding: 0.25rem 0;
+    text-decoration: none;
+  }
+
+  .nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: var(--accent-green);
+    transform: scaleX(0);
+    transform-origin: bottom right;
+    transition: transform 0.25s ease-out;
+  }
+
+  .nav-link:hover::after {
+    transform: scaleX(1);
+    transform-origin: bottom left;
+  }
+
+  /* Dropdown Styles */
+  .nav-item-dropdown {
+    position: relative;
+  }
+
+  .dropdown-toggle {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+  }
+
+  .dropdown-icon {
+    transition: transform 0.2s ease;
+  }
+
+  .nav-item-dropdown:hover .dropdown-icon {
+    transform: rotate(180deg);
+  }
+
+  .dropdown-menu {
+    position: absolute;
+    top: calc(100% + 5px);
+    left: 50%;
+    transform: translateX(-50%) translateY(10px);
+    opacity: 0;
+    visibility: hidden;
+    background-color: var(--bg-cream);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 0.75rem 0;
+    min-width: 220px;
+    box-shadow: 0 10px 30px rgba(15, 62, 43, 0.08);
+    transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
+    list-style: none;
+    margin: 0;
+    z-index: 1010;
+  }
+
+  .nav-item-dropdown:hover .dropdown-menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+  }
+
+  .dropdown-item {
+    display: block;
+    padding: 0.5rem 1.25rem;
+    font-family: var(--font-sans);
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--primary-dark);
+    text-decoration: none;
+    transition: background-color 0.2s ease, color 0.2s ease;
+    border-radius: 6px;
+    margin: 0 0.5rem;
+  }
+
+  .dropdown-item:hover {
+    background-color: var(--primary-dark);
+    color: var(--text-light);
+  }
+
+  /* CTAs */
+  .nav-ctas {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  .nav-link-login {
+    font-family: var(--font-sans);
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: var(--primary-dark);
+    text-decoration: none;
+  }
+
+  .btn-header {
+    padding: 0.625rem 1.5rem;
+    font-size: 0.9rem;
+  }
+
+  /* Mobile Toggle */
+  .mobile-toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 24px;
+    height: 18px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    z-index: 1001;
+  }
+
+  .hamburger-line {
+    width: 100%;
+    height: 2px;
+    background-color: var(--primary-dark);
+    transition: all 0.3s ease;
+  }
+
+  /* Mobile Drawer */
+  .mobile-drawer {
+    position: fixed;
+    top: 70px;
+    left: 0;
+    width: 100%;
+    height: calc(100vh - 70px);
+    background-color: var(--bg-cream);
+    z-index: 999;
+    transform: translateX(100%);
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    padding: 2rem 1.5rem;
+    border-top: 1px solid var(--border-color);
+    overflow-y: auto;
+  }
+
+  .mobile-drawer.open {
+    transform: translateX(0);
+  }
+
+  .nav-mobile ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    margin: 0;
+    padding: 0;
+  }
+
+  .mobile-nav-link {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--primary-dark);
+    display: block;
+    padding: 0.5rem 0;
+    text-decoration: none;
+  }
+
+  .mobile-divider {
+    height: 1px;
+    background-color: var(--border-color);
+    margin: 1rem 0;
+  }
+
+  .mobile-cta-btn {
+    width: 100%;
+    margin-top: 0.5rem;
+  }
+
+  /* Mobile Accordion Styles */
+  .mobile-dropdown-toggle {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--primary-dark);
+    background: none;
+    border: none;
+    text-align: left;
+    padding: 0.5rem 0;
+    cursor: pointer;
+    font-family: var(--font-sans);
+  }
+
+  .mobile-dropdown-icon {
+    transition: transform 0.3s ease;
+  }
+
+  .mobile-dropdown.open .mobile-dropdown-icon {
+    transform: rotate(180deg);
+  }
+
+  .mobile-dropdown-menu {
+    list-style: none;
+    display: none;
+    flex-direction: column;
+    gap: 0.75rem;
+    padding-left: 1.25rem;
+    margin-top: 0.5rem;
+    border-left: 2px solid var(--border-color);
+  }
+
+  .mobile-dropdown.open .mobile-dropdown-menu {
+    display: flex;
+  }
+
+  .mobile-nav-link-sub {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--text-dark);
+    display: block;
+    padding: 0.25rem 0;
+    text-decoration: none;
+  }
+
+  .mobile-nav-link-sub.val-parent {
+    color: var(--text-muted);
+    font-style: italic;
+  }
+
+  /* Media Queries */
+  @media (max-width: 768px) {
+    .nav-desktop, .nav-link-login, .btn-header {
+      display: none;
+    }
+    
+    .mobile-toggle {
+      display: flex;
+    }
+  }
+
+  /* Active states for toggle button */
+  .mobile-toggle.open .hamburger-line:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+  }
+  .mobile-toggle.open .hamburger-line:nth-child(2) {
+    opacity: 0;
+  }
+  .mobile-toggle.open .hamburger-line:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
+  }
+</style>
+
+<script>
+  const toggleBtn = document.getElementById('mobile-toggle');
+  const drawer = document.getElementById('mobile-drawer');
+  
+  if (toggleBtn && drawer) {
+    toggleBtn.addEventListener('click', () => {
+      toggleBtn.classList.toggle('open');
+      drawer.classList.toggle('open');
+      document.body.classList.toggle('overflow-hidden');
+    });
+
+    // Close menu when clicking a link
+    const links = drawer.querySelectorAll('a:not(.mobile-nav-link-sub)');
+    links.forEach(link => {
+      link.addEventListener('click', () => {
+        toggleBtn.classList.remove('open');
+        drawer.classList.remove('open');
+        document.body.classList.remove('overflow-hidden');
+      });
+    });
+
+    // Toggle mobile dropdown accordions
+    const mobileDropdowns = drawer.querySelectorAll('.mobile-dropdown');
+    mobileDropdowns.forEach(dropdown => {
+      const toggle = dropdown.querySelector('.mobile-dropdown-toggle');
+      if (toggle) {
+        toggle.addEventListener('click', (e) => {
+          e.stopPropagation();
+          dropdown.classList.toggle('open');
+        });
+      }
+    });
+  }
+</script>

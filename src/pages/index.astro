@@ -1,0 +1,57 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Hero from '../components/Hero.astro';
+import SocialProof from '../components/SocialProof.astro';
+import HowItWorks from '../components/HowItWorks.astro';
+import Outcomes from '../components/Outcomes.astro';
+import Guides from '../components/Guides.astro';
+import Features from '../components/Features.astro';
+import Pricing from '../components/Pricing.astro';
+import BlogSection from '../components/BlogSection.astro';
+import Faq from '../components/Faq.astro';
+import Footer from '../components/Footer.astro';
+import BlockRenderer from '../components/BlockRenderer.astro';
+import { fetchPageBySlug } from '../lib/wordpress';
+import { hasLazyBlocks } from '../lib/blocks';
+
+// Fetch the homepage content dynamically from WordPress
+const homePage = await fetchPageBySlug('home');
+const useBlocks = homePage && hasLazyBlocks(homePage.blocks);
+---
+
+<Layout title="LlamaForge - Fine-Tune & Run Local LLMs As A Service">
+	<Header />
+	<main>
+		{useBlocks ? (
+			<BlockRenderer blocks={homePage.blocks!} />
+		) : (
+			<>
+				<Hero />
+				<SocialProof />
+				<HowItWorks />
+				<Outcomes />
+				<Features />
+				<Guides />
+				<Pricing />
+				<BlogSection />
+				<Faq />
+			</>
+		)}
+	</main>
+	<Footer />
+</Layout>
+
+<style>
+	/* Make page fade in nicely on load */
+	main {
+		opacity: 0;
+		animation: fadeInPage 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+	}
+
+	@keyframes fadeInPage {
+		to {
+			opacity: 1;
+		}
+	}
+</style>

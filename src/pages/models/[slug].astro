@@ -1,0 +1,296 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import { fetchPageBySlug, fetchPages, type WPPage } from '../../lib/wordpress';
+
+const { slug } = Astro.params;
+
+// Always fetch live from WordPress on every request (SSR)
+const page = await fetchPageBySlug(slug!);
+
+// If page doesn't exist, return 404
+if (!page) {
+  return Astro.redirect('/404');
+}
+
+// Verify this page belongs to the 'models' parent
+const allPages = await fetchPages();
+const modelsParent = allPages.find((p) => p.slug === 'models');
+const modelsParentId = modelsParent ? modelsParent.id : -1;
+const pageParentId = page.parent;
+
+if (pageParentId !== modelsParentId) {
+  return Astro.redirect('/404');
+}
+---
+
+<Layout title={`${page.title.rendered} - Foundation AI Model`} description={page.excerpt.rendered.replace(/<[^>]*>/g, '')}>
+  <Header />
+
+  <main class="standard-detail-view">
+    <div class="container standard-layout-grid">
+      <!-- Left side: Standard Content -->
+      <article class="standard-main-content">
+        <a href="/#features" class="back-link">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M19 12H5M5 12l6-6M5 12l6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Back to Models
+        </a>
+        
+        <span class="standard-badge-tag">Foundation Model</span>
+        <h1 class="standard-main-title" set:html={page.title.rendered} />
+        
+        <div class="divider"></div>
+        
+        <div class="content-body" set:html={page.content.rendered} />
+      </article>
+
+      <!-- Right side: Auditor Sidebar -->
+      <aside class="standard-sidebar">
+        <div class="sidebar-card">
+          <h4>Model Specifications</h4>
+          
+          <ul class="sidebar-details-list">
+            <li>
+              <span class="detail-label">Base Family</span>
+              <span class="detail-val">{page.title.rendered.split(' ')[0]}</span>
+            </li>
+            <li>
+              <span class="detail-label">Accredited status</span>
+              <span class="detail-val status-badge">Optimized & ready</span>
+            </li>
+            <li>
+              <span class="detail-label">Context Window</span>
+              <span class="detail-val">8K - 128K Tokens</span>
+            </li>
+            <li>
+              <span class="detail-label">Fine-tuning Cost</span>
+              <span class="detail-val">Serverless GPU Pricing</span>
+            </li>
+          </ul>
+
+          <a href="/#pricing" class="btn btn-primary sidebar-cta">Fine-Tune This Model</a>
+        </div>
+
+        <div class="sidebar-auditor-quote">
+          <div class="auditor-avatar">
+            <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=150&h=150" alt="Elena" />
+          </div>
+          <blockquote>
+            "Fine-tuning open-source foundation models on domain-specific datasets yields a 40% accuracy increase over generic models."
+          </blockquote>
+          <cite>— Elena R., Lead AI Architect</cite>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <Footer />
+</Layout>
+
+<style>
+  .standard-detail-view {
+    padding-top: 120px;
+    padding-bottom: 6rem;
+    background-color: var(--bg-cream);
+    min-height: calc(100vh - 70px);
+  }
+
+  .standard-layout-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 4rem;
+    align-items: flex-start;
+  }
+
+  /* Main content */
+  .standard-main-content {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    margin-bottom: 2rem;
+  }
+
+  .back-link:hover {
+    color: var(--accent-green);
+  }
+
+  .standard-badge-tag {
+    font-size: 0.75rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    color: var(--accent-green);
+    letter-spacing: 1.5px;
+    margin-bottom: 0.5rem;
+  }
+
+  .standard-main-title {
+    font-size: clamp(2rem, 5vw, 3rem);
+    line-height: 1.15;
+    letter-spacing: -1px;
+    color: var(--primary-dark);
+  }
+
+  .divider {
+    height: 1px;
+    background-color: var(--border-color);
+    margin: 2rem 0;
+  }
+
+  /* Formatting WordPress output */
+  .content-body {
+    line-height: 1.8;
+    color: var(--text-dark);
+    font-size: 1.05rem;
+  }
+
+  .content-body :global(p) {
+    margin-bottom: 1.5rem;
+  }
+
+  .content-body :global(h2) {
+    font-size: 1.6rem;
+    color: var(--primary-dark);
+    margin-top: 2.25rem;
+    margin-bottom: 1rem;
+  }
+
+  .content-body :global(ul), .content-body :global(ol) {
+    margin-bottom: 1.5rem;
+    padding-left: 2rem;
+  }
+
+  .content-body :global(li) {
+    margin-bottom: 0.4rem;
+  }
+
+  .content-body :global(a) {
+    color: var(--accent-green);
+    text-decoration: underline;
+    font-weight: 700;
+  }
+
+  /* Sidebar styling */
+  .standard-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+    position: sticky;
+    top: 100px;
+  }
+
+  .sidebar-card {
+    background-color: var(--bg-sand);
+    border-radius: 24px;
+    padding: 2.5rem 2rem;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 10px 20px rgba(15, 62, 43, 0.02);
+  }
+
+  .sidebar-card h4 {
+    font-size: 1.25rem;
+    margin-bottom: 1.5rem;
+    color: var(--primary-dark);
+  }
+
+  .sidebar-details-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    margin-bottom: 2rem;
+  }
+
+  .sidebar-details-list li {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+  }
+
+  .sidebar-details-list li:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  .detail-label {
+    font-size: 0.75rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    letter-spacing: 0.5px;
+  }
+
+  .detail-val {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--primary-dark);
+  }
+
+  .status-badge {
+    color: var(--accent-green);
+  }
+
+  .sidebar-cta {
+    width: 100%;
+  }
+
+  /* Auditor quote */
+  .sidebar-auditor-quote {
+    background-color: var(--primary-dark);
+    color: var(--text-light);
+    padding: 2rem;
+    border-radius: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .auditor-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 2px solid var(--accent-green);
+  }
+
+  .auditor-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .sidebar-auditor-quote blockquote {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 1.05rem;
+    line-height: 1.5;
+  }
+
+  .sidebar-auditor-quote cite {
+    font-size: 0.75rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    color: var(--accent-mint);
+    letter-spacing: 0.5px;
+  }
+
+  @media (max-width: 992px) {
+    .standard-layout-grid {
+      grid-template-columns: 1fr;
+      gap: 3.5rem;
+    }
+    .standard-sidebar {
+      position: static;
+    }
+  }
+</style>

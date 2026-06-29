@@ -1,0 +1,164 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import BlockRenderer from '../components/BlockRenderer.astro';
+import { hasLazyBlocks } from '../lib/blocks';
+
+import { fetchPageBySlug, fetchPageById } from '../lib/strapi';
+
+// Live fetch preview data on request
+const slug = Astro.url.searchParams.get('slug');
+const id = Astro.url.searchParams.get('id');
+const secret = Astro.url.searchParams.get('secret');
+
+const previewSecret = import.meta.env.STRAPI_PREVIEW_SECRET || 'tnv_preview_secret_2026';
+
+// Simple security check (must match preview link secret token)
+if (secret !== previewSecret) {
+  return Astro.redirect('/404');
+}
+
+let page = null;
+try {
+  if (slug) {
+    page = await fetchPageBySlug(slug, true);
+  } else if (id) {
+    page = await fetchPageById(id, true);
+  }
+} catch (error) {
+  console.error("Preview fetch failed:", error);
+}
+
+if (!page) {
+  return Astro.redirect('/404');
+}
+
+const useBlocks = hasLazyBlocks(page.blocks);
+---
+
+<Layout title={`[PREVIEW] ${page.title.rendered}`} description="">
+  <div class="preview-banner">
+    ⚠️ YOU ARE VIEWING A LIVE PREVIEW DRAFT
+  </div>
+  <Header />
+
+  {useBlocks ? (
+    <main class="blocks-page-view">
+      <BlockRenderer blocks={page.blocks} />
+    </main>
+  ) : (
+    <main class="custom-page-view">
+      <div class="page-container">
+        <header class="page-header">
+          <h1 class="page-title" set:html={page.title.rendered} />
+        </header>
+        <div class="page-divider"></div>
+        <div class="page-content" set:html={page.content.rendered} />
+      </div>
+    </main>
+  )}
+
+  <Footer />
+</Layout>
+
+<style>
+  /* Preview banner styling */
+  .preview-banner {
+    position: fixed;
+    top: 70px;
+    left: 0;
+    width: 100%;
+    background-color: #ffcc00;
+    color: #000;
+    text-align: center;
+    padding: 0.5rem;
+    font-weight: 700;
+    z-index: 1002;
+    font-size: 0.85rem;
+    letter-spacing: 0.5px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  }
+
+  /* Spacing adjustments for the fixed header + preview banner */
+  .blocks-page-view {
+    padding-top: 110px;
+    min-height: calc(100vh - 110px);
+  }
+
+  .custom-page-view {
+    padding-top: 160px;
+    padding-bottom: 6rem;
+    background-color: var(--bg-cream);
+    min-height: calc(100vh - 110px);
+  }
+
+  .page-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+  }
+
+  .page-header {
+    margin-bottom: 2rem;
+    text-align: center;
+  }
+
+  .page-title {
+    font-size: clamp(2.25rem, 6vw, 3.5rem);
+    line-height: 1.15;
+    letter-spacing: -1.5px;
+    color: var(--primary-dark);
+  }
+
+  .page-divider {
+    height: 1px;
+    background-color: var(--border-color);
+    margin-bottom: 3rem;
+  }
+
+  /* Page Content Styling */
+  .page-content {
+    line-height: 1.8;
+    color: var(--text-dark);
+    font-size: 1.1rem;
+  }
+
+  .page-content :global(p) {
+    margin-bottom: 1.75rem;
+  }
+
+  .page-content :global(h2) {
+    font-size: 1.8rem;
+    color: var(--primary-dark);
+    margin-top: 2.5rem;
+    margin-bottom: 1.25rem;
+    letter-spacing: -0.5px;
+  }
+
+  .page-content :global(h3) {
+    font-size: 1.4rem;
+    color: var(--primary-dark);
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+  }
+
+  .page-content :global(ul), .page-content :global(ol) {
+    margin-bottom: 1.75rem;
+    padding-left: 2rem;
+  }
+
+  .page-content :global(li) {
+    margin-bottom: 0.5rem;
+  }
+
+  .page-content :global(a) {
+    color: var(--accent-green);
+    font-weight: 700;
+    text-decoration: underline;
+  }
+
+  .page-content :global(a:hover) {
+    color: var(--primary-dark);
+  }
+</style>

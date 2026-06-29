@@ -1,0 +1,212 @@
+---
+---
+<footer class="footer">
+  <div class="container footer-container">
+    <!-- Top Footer: Links Grid -->
+    <div class="footer-links-grid">
+      <!-- Column 1: Brand Info -->
+      <div class="footer-col brand-col">
+        <a href="/" class="footer-logo">
+          <svg width="40" height="40" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M50 95C74.8528 95 95 74.8528 95 50C95 25.1472 74.8528 5 50 5C25.1472 5 5 25.1472 5 50C5 74.8528 25.1472 95 50 95Z" fill="#e5f6f0"/>
+            <path d="M50 15C50 15 25 35 25 55C25 75 45 85 50 85C55 85 75 75 75 55C75 35 50 15 50 15Z" fill="#00aa6c"/>
+            <path d="M50 25C50 25 35 40 35 55C35 70 45 77 50 77C55 77 65 70 65 55C65 40 50 25 50 25Z" fill="#0f3e2b"/>
+          </svg>
+          <span class="footer-logo-text">llamaforge</span>
+        </a>
+        <p class="brand-tagline">
+          Serverless GPU platform to fine-tune, optimize, and deploy custom open-source LLMs worldwide.
+        </p>
+        <div class="social-links">
+          <!-- Facebook -->
+          <a href="#" aria-label="Facebook">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3v3h-3v6.8c4.56-.93 8-4.96 8-9.8z"/></svg>
+          </a>
+          <!-- Instagram -->
+          <a href="#" aria-label="Instagram">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.051.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- Column 2: Models -->
+      <div class="footer-col">
+        <h4>Models</h4>
+        <ul>
+          <li><a href="/models/llama-3">Llama 3</a></li>
+          <li><a href="/models/mistral">Mistral</a></li>
+          <li><a href="/models/phi-3">Phi-3</a></li>
+          <li><a href="/models/qwen">Qwen</a></li>
+        </ul>
+      </div>
+
+      <!-- Column 3: Resources -->
+      <div class="footer-col">
+        <h4>Developer Tools</h4>
+        <ul>
+          <li><a href="#login">Model Dashboard</a></li>
+          <li><a href="#login">Model Hub</a></li>
+          <li><a href="#pricing">Fine-Tuning API</a></li>
+          <li><a href="#pricing">Documentation</a></li>
+        </ul>
+      </div>
+
+      <!-- Column 4: Company -->
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="/about-us">About LlamaForge</a></li>
+          <li><a href="/#pricing">GPU Clusters</a></li>
+          <li><a href="/#pricing">Security & Privacy</a></li>
+          <li><a href="/contact-us">Contact Support</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Divider -->
+    <div class="footer-divider"></div>
+
+    <!-- Bottom Legal Info -->
+    <div class="footer-bottom">
+      <p class="copyright">&copy; 2026 LlamaForge AI Project. All rights reserved.</p>
+      <p class="legal-text">
+        This is an educational headless WordPress + Astro JS demonstration website. LlamaForge is a simulated SaaS platform for fine-tuning and running local LLMs. Model execution and API endpoints are simulated for study purposes.
+      </p>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    background-color: var(--primary-dark);
+    color: var(--bg-cream);
+    padding: 5rem 1.5rem 3rem 1.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .footer-container {
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
+  }
+
+  /* Grid Layout */
+  .footer-links-grid {
+    display: grid;
+    grid-template-columns: 1.5fr repeat(3, 1fr);
+    gap: 4rem;
+  }
+
+  .footer-col {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .brand-col {
+    gap: 1.25rem;
+  }
+
+  .footer-logo {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--bg-cream);
+    font-weight: 800;
+    font-size: 1.75rem;
+  }
+
+  .footer-logo-text {
+    letter-spacing: -1px;
+    font-weight: 900;
+  }
+
+  .brand-tagline {
+    font-size: 0.9rem;
+    color: var(--accent-mint);
+    max-width: 280px;
+    line-height: 1.5;
+  }
+
+  .social-links {
+    display: flex;
+    gap: 1.25rem;
+    color: var(--accent-mint);
+    margin-top: 0.5rem;
+  }
+
+  .social-links a:hover {
+    color: var(--accent-green);
+    transform: translateY(-2px);
+  }
+
+  /* Columns links */
+  .footer-col h4 {
+    font-family: var(--font-sans);
+    font-size: 0.9rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--accent-green);
+  }
+
+  .footer-col ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+  }
+
+  .footer-col a {
+    font-size: 0.9rem;
+    color: var(--accent-mint);
+    opacity: 0.8;
+  }
+
+  .footer-col a:hover {
+    opacity: 1;
+    color: var(--text-light);
+    padding-left: 4px;
+  }
+
+  .footer-divider {
+    height: 1px;
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+
+  /* Bottom Row */
+  .footer-bottom {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    font-size: 0.8rem;
+    color: var(--accent-mint);
+    opacity: 0.7;
+    line-height: 1.6;
+  }
+
+  .copyright {
+    font-weight: 700;
+  }
+
+  .legal-text {
+    max-width: 900px;
+  }
+
+  @media (max-width: 992px) {
+    .footer-links-grid {
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+    }
+  }
+
+  @media (max-width: 576px) {
+    .footer-links-grid {
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
+    }
+    .footer {
+      padding: 4rem 1.25rem 2.5rem 1.25rem;
+    }
+  }
+</style>

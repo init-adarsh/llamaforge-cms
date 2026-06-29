@@ -1,0 +1,53 @@
+---
+/**
+ * BlockRenderer.astro
+ *
+ * The central dispatcher for custom Gutenberg blocks.
+ * Pass in the `blocks` array from any WPPage or WPPost,
+ * and it renders each enabled block in the exact order specified in the editor.
+ */
+import HeroBlock from './blocks/HeroBlock.astro';
+import StatsBlock from './blocks/StatsBlock.astro';
+import TimelineBlock from './blocks/TimelineBlock.astro';
+import FeaturesGrid from './blocks/FeaturesGrid.astro';
+import CtaBlock from './blocks/CtaBlock.astro';
+import FaqBlock from './blocks/FaqBlock.astro';
+import RichTextBlock from './blocks/RichTextBlock.astro';
+
+interface Props {
+  blocks: any[];
+}
+
+const { blocks = [] } = Astro.props;
+
+// Filter out empty/unregistered blocks to only target our custom theme blocks
+const activeBlocks = blocks.filter(b => b.blockName && b.blockName.startsWith('lazyblock/'));
+---
+
+{activeBlocks.map(block => {
+  const attrs = block.attrs || {};
+  
+  // Skip rendering if the block is explicitly disabled in the editor
+  if (attrs.enabled === false) {
+    return null;
+  }
+  
+  switch (block.blockName) {
+    case 'lazyblock/hero-block':
+      return <HeroBlock block={attrs} />;
+    case 'lazyblock/stats-block':
+      return <StatsBlock block={attrs} />;
+    case 'lazyblock/timeline-block':
+      return <TimelineBlock block={attrs} />;
+    case 'lazyblock/features-block':
+      return <FeaturesGrid block={attrs} />;
+    case 'lazyblock/cta-block':
+      return <CtaBlock block={attrs} />;
+    case 'lazyblock/faq-block':
+      return <FaqBlock block={attrs} />;
+    case 'lazyblock/richtext-block':
+      return <RichTextBlock block={attrs} />;
+    default:
+      return null;
+  }
+})}

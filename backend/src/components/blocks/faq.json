@@ -1,0 +1,26 @@
+{
+  "collectionName": "components_blocks_faqs",
+  "info": {
+    "displayName": "FAQ Block",
+    "icon": "question",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "enabled": {
+      "type": "boolean",
+      "default": true
+    },
+    "badge_text": { "type": "string" },
+    "title": { "type": "string" },
+    "description": { "type": "text" },
+    "question_1": { "type": "string" }, "answer_1": { "type": "text" },
+    "question_2": { "type": "string" }, "answer_2": { "type": "text" },
+    "question_3": { "type": "string" }, "answer_3": { "type": "text" },
+    "question_4": { "type": "string" }, "answer_4": { "type": "text" },
+    "question_5": { "type": "string" }, "answer_5": { "type": "text" },
+    "question_6": { "type": "string" }, "answer_6": { "type": "text" },
+    "question_7": { "type": "string" }, "answer_7": { "type": "text" },
+    "question_8": { "type": "string" }, "answer_8": { "type": "text" }
+  }
+}

@@ -1,0 +1,127 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import BlockRenderer from '../components/BlockRenderer.astro';
+import { fetchPageBySlug, type WPPage } from '../lib/wordpress';
+import { hasLazyBlocks } from '../lib/blocks';
+
+const { slug } = Astro.params;
+
+// Always fetch live from WordPress on every request (SSR)
+const page = await fetchPageBySlug(slug!);
+
+// If WordPress doesn't have a page with this slug, return a real 404
+if (!page) {
+  return Astro.redirect('/404');
+}
+
+const useBlocks = hasLazyBlocks(page.blocks);
+---
+
+<Layout title={`${page.title.rendered} - LlamaForge`} description={page.excerpt.rendered.replace(/<[^>]*>/g, '')}>
+  <Header />
+
+  {useBlocks ? (
+    <main class="blocks-page-view">
+      <BlockRenderer blocks={page.blocks!} />
+    </main>
+  ) : (
+    <main class="custom-page-view">
+      <div class="page-container">
+        <header class="page-header">
+          <h1 class="page-title" set:html={page.title.rendered} />
+        </header>
+        <div class="page-divider"></div>
+        <div class="page-content" set:html={page.content.rendered} />
+      </div>
+    </main>
+  )}
+
+  <Footer />
+</Layout>
+
+
+<style>
+  /* Block mode: sections handle their own padding, just clear the fixed header */
+  .blocks-page-view {
+    padding-top: 70px;
+    min-height: calc(100vh - 70px);
+  }
+
+  .custom-page-view {
+    padding-top: 120px; /* Header spacing */
+    padding-bottom: 6rem;
+    background-color: var(--bg-cream);
+    min-height: calc(100vh - 70px);
+  }
+
+  .page-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+  }
+
+  .page-header {
+    margin-bottom: 2rem;
+    text-align: center;
+  }
+
+  .page-title {
+    font-size: clamp(2.25rem, 6vw, 3.5rem);
+    line-height: 1.15;
+    letter-spacing: -1.5px;
+    color: var(--primary-dark);
+  }
+
+  .page-divider {
+    height: 1px;
+    background-color: var(--border-color);
+    margin-bottom: 3rem;
+  }
+
+  /* Page Content Styling */
+  .page-content {
+    line-height: 1.8;
+    color: var(--text-dark);
+    font-size: 1.1rem;
+  }
+
+  .page-content :global(p) {
+    margin-bottom: 1.75rem;
+  }
+
+  .page-content :global(h2) {
+    font-size: 1.8rem;
+    color: var(--primary-dark);
+    margin-top: 2.5rem;
+    margin-bottom: 1.25rem;
+    letter-spacing: -0.5px;
+  }
+
+  .page-content :global(h3) {
+    font-size: 1.4rem;
+    color: var(--primary-dark);
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+  }
+
+  .page-content :global(ul), .page-content :global(ol) {
+    margin-bottom: 1.75rem;
+    padding-left: 2rem;
+  }
+
+  .page-content :global(li) {
+    margin-bottom: 0.5rem;
+  }
+
+  .page-content :global(a) {
+    color: var(--accent-green);
+    font-weight: 700;
+    text-decoration: underline;
+  }
+
+  .page-content :global(a:hover) {
+    color: var(--primary-dark);
+  }
+</style>
