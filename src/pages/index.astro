@@ -17,7 +17,8 @@ import { hasLazyBlocks } from '../lib/blocks';
 
 // Fetch the homepage content dynamically from WordPress
 const homePage = await fetchPageBySlug('home');
-const useBlocks = homePage && hasLazyBlocks(homePage.blocks);
+// ponytail: bypassed to show the full static landing page as requested by user
+const useBlocks = false; // homePage && hasLazyBlocks(homePage.blocks);
 ---
 
 <Layout title="LlamaForge - Fine-Tune & Run Local LLMs As A Service">
