@@ -48,10 +48,10 @@ export async function fetchPostBySlug(slug: string): Promise<WPPost | null> {
   return strapi.fetchPostBySlug(slug);
 }
 
-export async function fetchPages(): Promise<WPPage[]> {
-  return strapi.fetchPages();
+export async function fetchPages(locale?: string): Promise<WPPage[]> {
+  return strapi.fetchPages(locale);
 }
 
-export async function fetchPageBySlug(slug: string): Promise<WPPage | null> {
-  return strapi.fetchPageBySlug(slug);
+export async function fetchPageBySlug(slug: string, locale?: string): Promise<WPPage | null> {
+  return strapi.fetchPageBySlug(slug, false, locale);
 }

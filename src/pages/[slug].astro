@@ -11,9 +11,10 @@ import { fetchPageBySlug, type WPPage } from '../lib/wordpress';
 import { hasLazyBlocks } from '../lib/blocks';
 
 const { slug } = Astro.params;
+const locale = Astro.url.searchParams.get('lang') || 'en';
 
 // Always fetch live from WordPress on every request (SSR)
-const page = await fetchPageBySlug(slug!);
+const page = await fetchPageBySlug(slug!, locale);
 
 // If WordPress doesn't have a page with this slug, return a real 404
 if (!page) {

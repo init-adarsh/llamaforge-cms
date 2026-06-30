@@ -123,9 +123,10 @@ export function transformPost(strapiPost: any): WPPost {
 /**
  * Fetch all pages from Strapi.
  */
-export async function fetchPages(): Promise<WPPage[]> {
+export async function fetchPages(locale?: string): Promise<WPPage[]> {
   try {
-    const res = await fetch(`${STRAPI_API_URL}/api/pages?populate=*&status=published&t=${Date.now()}`, {
+    const localeQuery = locale ? `&locale=${locale}` : '';
+    const res = await fetch(`${STRAPI_API_URL}/api/pages?populate=*&status=published${localeQuery}&t=${Date.now()}`, {
       cache: 'no-store',
     });
     if (!res.ok) {
@@ -143,11 +144,12 @@ export async function fetchPages(): Promise<WPPage[]> {
 /**
  * Fetch a single page by slug. Supports preview drafts.
  */
-export async function fetchPageBySlug(slug: string, isPreview = false): Promise<WPPage | null> {
+export async function fetchPageBySlug(slug: string, isPreview = false, locale?: string): Promise<WPPage | null> {
   const status = isPreview ? 'preview' : 'published';
   try {
+    const localeQuery = locale ? `&locale=${locale}` : '';
     const res = await fetch(
-      `${STRAPI_API_URL}/api/pages?filters[slug][$eq]=${slug}&populate=*&status=${status}&t=${Date.now()}`,
+      `${STRAPI_API_URL}/api/pages?filters[slug][$eq]=${slug}&populate=*&status=${status}${localeQuery}&t=${Date.now()}`,
       { cache: 'no-store' }
     );
     if (!res.ok) {
