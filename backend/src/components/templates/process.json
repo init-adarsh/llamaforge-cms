@@ -1,0 +1,42 @@
+{
+  "collectionName": "components_templates_processes",
+  "info": {
+    "displayName": "Process Template",
+    "icon": "cog",
+    "description": "Template data for process/method pages"
+  },
+  "options": {},
+  "attributes": {
+    "process_heading": {
+      "type": "string",
+      "required": true
+    },
+    "process_description": {
+      "type": "text"
+    },
+    "step_1_title": {
+      "type": "string"
+    },
+    "step_1_description": {
+      "type": "text"
+    },
+    "step_2_title": {
+      "type": "string"
+    },
+    "step_2_description": {
+      "type": "text"
+    },
+    "step_3_title": {
+      "type": "string"
+    },
+    "step_3_description": {
+      "type": "text"
+    },
+    "step_4_title": {
+      "type": "string"
+    },
+    "step_4_description": {
+      "type": "text"
+    }
+  }
+}

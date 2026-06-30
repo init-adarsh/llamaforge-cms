@@ -3,7 +3,7 @@
   "info": {
     "displayName": "Rich Text Block",
     "icon": "align-left",
-    "description": ""
+    "description": "Rich text blocks using Blocks Editor"
   },
   "options": {},
   "attributes": {
@@ -12,7 +12,7 @@
       "default": true
     },
     "content": {
-      "type": "richtext"
+      "type": "blocks"
     }
   }
 }

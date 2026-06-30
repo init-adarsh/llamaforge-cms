@@ -33,6 +33,11 @@ export interface WPPage {
   };
   acf?: any;
   blocks?: any[];
+  template?: string;
+  template_country?: any;
+  template_about?: any;
+  template_process?: any;
+  template_faq?: any;
 }
 
 export async function fetchPosts(): Promise<WPPost[]> {

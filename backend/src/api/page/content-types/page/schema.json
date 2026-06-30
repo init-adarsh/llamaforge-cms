@@ -5,12 +5,16 @@
     "singularName": "page",
     "pluralName": "pages",
     "displayName": "Page",
-    "description": ""
+    "description": "Standard pages and templates"
   },
   "options": {
     "draftAndPublish": true
   },
-  "pluginOptions": {},
+  "pluginOptions": {
+    "i18n": {
+      "localized": true
+    }
+  },
   "attributes": {
     "parent": {
       "type": "integer",
@@ -18,7 +22,12 @@
     },
     "title": {
       "type": "string",
-      "required": true
+      "required": true,
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
     },
     "slug": {
       "type": "uid",
@@ -26,10 +35,76 @@
       "required": true
     },
     "excerpt": {
-      "type": "text"
+      "type": "text",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
     },
     "content": {
-      "type": "richtext"
+      "type": "blocks",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
+    },
+    "template": {
+      "type": "enumeration",
+      "enum": [
+        "default",
+        "country",
+        "about",
+        "process",
+        "faq"
+      ],
+      "default": "default",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
+    },
+    "template_country": {
+      "type": "component",
+      "repeatable": false,
+      "component": "templates.country",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
+    },
+    "template_about": {
+      "type": "component",
+      "repeatable": false,
+      "component": "templates.about",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
+    },
+    "template_process": {
+      "type": "component",
+      "repeatable": false,
+      "component": "templates.process",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
+    },
+    "template_faq": {
+      "type": "component",
+      "repeatable": false,
+      "component": "templates.faq",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
     },
     "blocks": {
       "type": "dynamiczone",
@@ -41,7 +116,12 @@
         "blocks.cta",
         "blocks.faq",
         "blocks.rich-text"
-      ]
+      ],
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
     }
   }
 }

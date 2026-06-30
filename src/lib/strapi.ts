@@ -1,4 +1,5 @@
 import type { WPPost, WPPage } from './wordpress';
+import { renderBlocks } from './blocks-renderer';
 
 const STRAPI_API_URL = import.meta.env.STRAPI_API_URL || 'http://127.0.0.1:1337';
 
@@ -35,6 +36,7 @@ function mapStrapiBlock(block: any): any {
       break;
     case 'blocks.rich-text':
       blockName = 'lazyblock/richtext-block';
+      attrs.content = Array.isArray(block.content) ? renderBlocks(block.content) : block.content;
       break;
     default:
       return null;
@@ -77,13 +79,20 @@ export function transformPage(strapiPage: any): WPPage {
       rendered: strapiPage.title || '',
     },
     content: {
-      rendered: strapiPage.content || '',
+      rendered: Array.isArray(strapiPage.content)
+        ? renderBlocks(strapiPage.content)
+        : strapiPage.content || '',
     },
     excerpt: {
       rendered: strapiPage.excerpt || '',
     },
     blocks,
     acf,
+    template: strapiPage.template || 'default',
+    template_country: strapiPage.template_country || null,
+    template_about: strapiPage.template_about || null,
+    template_process: strapiPage.template_process || null,
+    template_faq: strapiPage.template_faq || null,
   };
 }
 
@@ -99,7 +108,9 @@ export function transformPost(strapiPost: any): WPPost {
       rendered: strapiPost.title || '',
     },
     content: {
-      rendered: strapiPost.content || '',
+      rendered: Array.isArray(strapiPost.content)
+        ? renderBlocks(strapiPost.content)
+        : strapiPost.content || '',
     },
     excerpt: {
       rendered: strapiPost.excerpt || '',

@@ -1,0 +1,48 @@
+{
+  "collectionName": "components_templates_faqs",
+  "info": {
+    "displayName": "FAQ Template",
+    "icon": "question",
+    "description": "Template data for FAQ list pages"
+  },
+  "options": {},
+  "attributes": {
+    "faq_heading": {
+      "type": "string",
+      "required": true
+    },
+    "faq_description": {
+      "type": "text"
+    },
+    "q1": {
+      "type": "string"
+    },
+    "a1": {
+      "type": "text"
+    },
+    "q2": {
+      "type": "string"
+    },
+    "a2": {
+      "type": "text"
+    },
+    "q3": {
+      "type": "string"
+    },
+    "a3": {
+      "type": "text"
+    },
+    "q4": {
+      "type": "string"
+    },
+    "a4": {
+      "type": "text"
+    },
+    "q5": {
+      "type": "string"
+    },
+    "a5": {
+      "type": "text"
+    }
+  }
+}

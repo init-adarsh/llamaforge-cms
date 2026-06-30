@@ -3,6 +3,10 @@ import Layout from '../layouts/Layout.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import BlockRenderer from '../components/BlockRenderer.astro';
+import CountryTemplate from '../components/templates/CountryTemplate.astro';
+import AboutTemplate from '../components/templates/AboutTemplate.astro';
+import ProcessTemplate from '../components/templates/ProcessTemplate.astro';
+import FAQTemplate from '../components/templates/FAQTemplate.astro';
 import { fetchPageBySlug, type WPPage } from '../lib/wordpress';
 import { hasLazyBlocks } from '../lib/blocks';
 
@@ -22,7 +26,15 @@ const useBlocks = hasLazyBlocks(page.blocks);
 <Layout title={`${page.title.rendered} - LlamaForge`} description={page.excerpt.rendered.replace(/<[^>]*>/g, '')}>
   <Header />
 
-  {useBlocks ? (
+  {page.template === 'country' && page.template_country ? (
+    <CountryTemplate data={page.template_country} />
+  ) : page.template === 'about' && page.template_about ? (
+    <AboutTemplate data={page.template_about} />
+  ) : page.template === 'process' && page.template_process ? (
+    <ProcessTemplate data={page.template_process} />
+  ) : page.template === 'faq' && page.template_faq ? (
+    <FAQTemplate data={page.template_faq} />
+  ) : useBlocks ? (
     <main class="blocks-page-view">
       <BlockRenderer blocks={page.blocks!} />
     </main>

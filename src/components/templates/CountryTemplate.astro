@@ -1,0 +1,264 @@
+---
+interface Props {
+  data: {
+    country_name: string;
+    flag_emoji: string;
+    hero_headline: string;
+    hero_subheadline?: string;
+    region_name?: string;
+    stat_1_value?: string;
+    stat_1_label?: string;
+    stat_2_value?: string;
+    stat_2_label?: string;
+    stat_3_value?: string;
+    stat_3_label?: string;
+    local_pricing_text?: string;
+    local_gpu_server?: string;
+    highlights?: string;
+  };
+}
+
+const { data } = Astro.props;
+---
+
+<div class="country-template">
+  <!-- Hero Section -->
+  <section class="country-hero">
+    <div class="container hero-container">
+      <span class="country-badge">
+        <span class="flag">{data.flag_emoji || '🌐'}</span>
+        {data.region_name || 'Global'} Region
+      </span>
+      <h1 class="hero-title">{data.hero_headline}</h1>
+      <p class="hero-desc">{data.hero_subheadline || `Premium local LLM serverless API endpoints optimized for developers in ${data.country_name}.`}</p>
+      
+      <div class="hero-ctas">
+        <a href="#pricing" class="btn btn-primary">Deploy in {data.country_name}</a>
+        <a href="#docs" class="btn btn-secondary">Read Region Specs</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Statistics / Specs Section -->
+  {(data.stat_1_value || data.stat_2_value || data.stat_3_value) && (
+    <section class="country-stats">
+      <div class="container stats-grid">
+        {data.stat_1_value && (
+          <div class="stat-card">
+            <span class="stat-num">{data.stat_1_value}</span>
+            <span class="stat-label">{data.stat_1_label || 'Latency'}</span>
+          </div>
+        )}
+        {data.stat_2_value && (
+          <div class="stat-card">
+            <span class="stat-num">{data.stat_2_value}</span>
+            <span class="stat-label">{data.stat_2_label || 'GPU Nodes'}</span>
+          </div>
+        )}
+        {data.stat_3_value && (
+          <div class="stat-card">
+            <span class="stat-num">{data.stat_3_value}</span>
+            <span class="stat-label">{data.stat_3_label || 'Availability'}</span>
+          </div>
+        )}
+      </div>
+    </section>
+  )}
+
+  <!-- Regional Details Section -->
+  <section class="country-details">
+    <div class="container details-grid">
+      <div class="details-main">
+        <h2 class="section-title font-serif">Infrastructure optimized for {data.country_name}</h2>
+        <div class="details-content">
+          {data.highlights ? (
+            <p class="highlights-text">{data.highlights}</p>
+          ) : (
+            <p class="highlights-text">
+              Our local GPU clusters deliver low-latency serverless model execution and fine-tuning. Deploy customized Llama, Mistral, and Qwen models with full data compliance and sub-second execution starts.
+            </p>
+          )}
+        </div>
+      </div>
+      
+      <div class="details-sidebar">
+        {data.local_gpu_server && (
+          <div class="sidebar-widget">
+            <h4>GPU Cluster Node</h4>
+            <p>{data.local_gpu_server}</p>
+          </div>
+        )}
+        {data.local_pricing_text && (
+          <div class="sidebar-widget">
+            <h4>Regional Pricing</h4>
+            <p>{data.local_pricing_text}</p>
+          </div>
+        )}
+      </div>
+    </div>
+  </section>
+</div>
+
+<style>
+  .country-template {
+    padding-top: 70px;
+    background-color: var(--bg-cream);
+  }
+
+  .country-hero {
+    background-color: var(--primary-dark);
+    color: var(--text-light);
+    padding: 6rem 1.5rem 8rem;
+    text-align: center;
+    border-bottom: 1px solid var(--border-color);
+  }
+
+  .hero-container {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .country-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background-color: rgba(255, 255, 255, 0.1);
+    padding: 0.5rem 1rem;
+    border-radius: 9999px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    margin-bottom: 2rem;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+
+  .flag {
+    font-size: 1.25rem;
+  }
+
+  .hero-title {
+    font-family: var(--font-serif);
+    font-size: clamp(2.5rem, 6vw, 4rem);
+    line-height: 1.1;
+    color: var(--text-light);
+    margin-bottom: 1.5rem;
+    letter-spacing: -2px;
+  }
+
+  .hero-desc {
+    font-size: clamp(1.1rem, 2vw, 1.35rem);
+    line-height: 1.6;
+    color: rgba(252, 251, 250, 0.8);
+    max-width: 700px;
+    margin: 0 auto 2.5rem;
+  }
+
+  .hero-ctas {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  /* Stats Section */
+  .country-stats {
+    margin-top: -4rem;
+    padding-bottom: 4rem;
+    z-index: 10;
+    position: relative;
+  }
+
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .stat-card {
+    background-color: var(--bg-cream);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 2.5rem 2rem;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(15, 62, 43, 0.04);
+  }
+
+  .stat-num {
+    display: block;
+    font-family: var(--font-serif);
+    font-size: 3rem;
+    font-weight: 800;
+    color: var(--primary-dark);
+    line-height: 1;
+    margin-bottom: 0.5rem;
+  }
+
+  .stat-label {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  /* Details Section */
+  .country-details {
+    padding: 5rem 1.5rem 8rem;
+  }
+
+  .details-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 4rem;
+  }
+
+  @media (max-width: 768px) {
+    .details-grid {
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
+    }
+  }
+
+  .section-title {
+    font-size: clamp(2rem, 4vw, 2.75rem);
+    color: var(--primary-dark);
+    margin-bottom: 2rem;
+    line-height: 1.15;
+    letter-spacing: -1px;
+  }
+
+  .highlights-text {
+    font-size: 1.15rem;
+    line-height: 1.8;
+    color: var(--text-dark);
+  }
+
+  .details-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .sidebar-widget {
+    background-color: var(--bg-sand);
+    border-radius: 16px;
+    padding: 2rem;
+    border: 1px solid rgba(229, 223, 217, 0.5);
+  }
+
+  .sidebar-widget h4 {
+    font-size: 0.9rem;
+    font-weight: 800;
+    color: var(--primary-dark);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 0.75rem;
+  }
+
+  .sidebar-widget p {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--text-dark);
+    margin: 0;
+  }
+</style>

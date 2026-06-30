@@ -1,0 +1,36 @@
+{
+  "collectionName": "components_templates_abouts",
+  "info": {
+    "displayName": "About Us Template",
+    "icon": "user",
+    "description": "Template data for About Us pages"
+  },
+  "options": {},
+  "attributes": {
+    "story_heading": {
+      "type": "string",
+      "required": true
+    },
+    "story_content": {
+      "type": "text"
+    },
+    "mission_heading": {
+      "type": "string"
+    },
+    "mission_content": {
+      "type": "text"
+    },
+    "vision_heading": {
+      "type": "string"
+    },
+    "vision_content": {
+      "type": "text"
+    },
+    "team_heading": {
+      "type": "string"
+    },
+    "team_intro": {
+      "type": "text"
+    }
+  }
+}

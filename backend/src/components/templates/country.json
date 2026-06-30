@@ -1,0 +1,56 @@
+{
+  "collectionName": "components_templates_countries",
+  "info": {
+    "displayName": "Country Template",
+    "icon": "earth",
+    "description": "Template data for country-specific landing pages"
+  },
+  "options": {},
+  "attributes": {
+    "country_name": {
+      "type": "string",
+      "required": true
+    },
+    "flag_emoji": {
+      "type": "string",
+      "default": "🌐"
+    },
+    "hero_headline": {
+      "type": "string",
+      "required": true
+    },
+    "hero_subheadline": {
+      "type": "text"
+    },
+    "region_name": {
+      "type": "string"
+    },
+    "stat_1_value": {
+      "type": "string"
+    },
+    "stat_1_label": {
+      "type": "string"
+    },
+    "stat_2_value": {
+      "type": "string"
+    },
+    "stat_2_label": {
+      "type": "string"
+    },
+    "stat_3_value": {
+      "type": "string"
+    },
+    "stat_3_label": {
+      "type": "string"
+    },
+    "local_pricing_text": {
+      "type": "string"
+    },
+    "local_gpu_server": {
+      "type": "string"
+    },
+    "highlights": {
+      "type": "text"
+    }
+  }
+}
